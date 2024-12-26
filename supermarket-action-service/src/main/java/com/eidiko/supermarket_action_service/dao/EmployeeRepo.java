@@ -1,5 +1,6 @@
 package com.eidiko.supermarket_action_service.dao;
 
+import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,10 +29,13 @@ public class EmployeeRepo {
         return "employee added";
     }
 
-    public String deleteEmployee(int id)
-    {
+    public String deleteEmployee(int id) throws EmployeeNotFoundException {
         String sql="delete from employees where id=?";
-        jdbcTemplate.update(sql,id);
+        int result=jdbcTemplate.update(sql,id);
+        if(result==0)
+        {
+            throw new EmployeeNotFoundException("Employee not found");
+        }
         return "employee deleted";
     }
 

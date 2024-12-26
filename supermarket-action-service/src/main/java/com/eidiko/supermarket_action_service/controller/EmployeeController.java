@@ -1,5 +1,6 @@
 package com.eidiko.supermarket_action_service.controller;
 
+import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.model.Employee;
 import com.eidiko.supermarket_action_service.services.EmployeeService;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +38,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/deleteEmployee/{id}")
-    public String deleteEmployee(@PathVariable int id)
-    {
+    public String deleteEmployee(@PathVariable int id) throws EmployeeNotFoundException {
         return employeeService.deleteEmployee(id);
     }
 
