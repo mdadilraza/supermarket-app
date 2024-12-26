@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public class EmployeeRepo {
 
@@ -30,6 +33,36 @@ public class EmployeeRepo {
         String sql="delete from employees where id=?";
         jdbcTemplate.update(sql,id);
         return "employee deleted";
+    }
+
+    public int updateUserDetails(int id, String phoneNumber, String newEmail, String newPassword) {
+        StringBuilder sql = new StringBuilder("UPDATE employees SET ");
+        List<Object> params = new ArrayList<>();
+        // Dynamically add the columns that are not null
+        boolean isFirst = true;
+
+        if (phoneNumber != null) {
+            System.out.println(phoneNumber);
+            sql.append("phone_number = ?");
+            params.add(phoneNumber);
+            isFirst = false;
+        }
+
+        if (newEmail != null) {
+            if (!isFirst) sql.append(", ");
+            sql.append("email = ?");
+            params.add(newEmail);
+            isFirst = false;
+        }
+
+        if (newPassword != null) {
+            if (!isFirst) sql.append(", ");
+            sql.append("password = ?");
+            params.add(newPassword);
+        }
+        sql.append(" WHERE id = ?");
+        params.add(id);
+        return jdbcTemplate.update(sql.toString(), params.toArray());
     }
 
 
