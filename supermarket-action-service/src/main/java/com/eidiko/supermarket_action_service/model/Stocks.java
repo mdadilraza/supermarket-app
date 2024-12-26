@@ -3,11 +3,20 @@ package com.eidiko.supermarket_action_service.model;
 
 public class Stocks {
 
+    private int id;
     private String name;
     private String category;
     private int quantity;
     private double price;
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -44,7 +53,8 @@ public class Stocks {
     @Override
     public String toString() {
         return "Stocks{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", quantity=" + quantity +
                 ", price=" + price +
