@@ -25,19 +25,16 @@ public class EmployeeController {
 
     @PatchMapping("/updateEmployee/{id}")
     public String updateUser(@PathVariable int id,
-                             @RequestParam(required = false) String newPhoneNumber,
-                             @RequestParam(required = false) String newEmail,
-                             @RequestParam(required = false) String newPassword) {
-        int rowsUpdated = employeeService.updateUserDetails(id, newPhoneNumber, newEmail, newPassword);
+                             @RequestBody Employee employee) {
+        System.out.println(employee.getPhoneNumber());
+        int rowsUpdated = employeeService.updateUserDetails(id, employee.getPhoneNumber(),employee.getEmail(),employee.getPassword());
 
         if (rowsUpdated > 0) {
-            return "User details updated successfully!";
+            return "Employee details updated successfully!";
         } else {
-            return "User not found or no updates made!";
+            return "No employee found with the given ID!";
         }
     }
-
-
 
     @DeleteMapping("/deleteEmployee/{id}")
     public String deleteEmployee(@PathVariable int id)

@@ -17,4 +17,16 @@ public class StocksService {
     public String addStocks(Stocks stock) {
         return stocksRepo.addStocks(stock);
     }
+
+    public void updateStocks(int id,Stocks stocks)
+    {
+         stocksRepo.updateStocks(id,stocks);
+    }
+
+    public String deleteStock(int id)
+    {
+        return stocksRepo.deleteStock(id);
+    }
+
+
 }

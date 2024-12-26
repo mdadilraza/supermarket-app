@@ -29,7 +29,7 @@ public class MsSQLConfig {
 
     @Bean(name = "mssqlJdbcTemplate")
     public JdbcTemplate mssqlJdbcTemplate(@Qualifier("mssqlDataSource") DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
+        return new  JdbcTemplate(dataSource);
     }
 
 }
