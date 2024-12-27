@@ -8,6 +8,7 @@ import java.util.List;
 public interface StockService {
 
     Stock getStockById(int id) throws StockNotFoundException;
+
     List<Stock> getAllStocks();
 
 }

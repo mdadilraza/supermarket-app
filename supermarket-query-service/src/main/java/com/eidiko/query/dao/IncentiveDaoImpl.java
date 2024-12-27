@@ -5,6 +5,7 @@ import com.eidiko.query.exception.IncentiveNotFoundException;
 import com.eidiko.query.mapper.IncentiveMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

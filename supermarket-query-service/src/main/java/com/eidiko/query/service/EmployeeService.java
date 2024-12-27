@@ -8,6 +8,7 @@ import java.util.List;
 public interface EmployeeService {
 
     EmployeeDTO getEmployeeById(int id) throws EmployeeNotFoundException;
+
     List<EmployeeDTO> getAllEmployees();
 
 }
