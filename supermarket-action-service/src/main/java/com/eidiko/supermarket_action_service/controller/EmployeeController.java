@@ -2,7 +2,9 @@ package com.eidiko.supermarket_action_service.controller;
 
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.model.Employee;
+import com.eidiko.supermarket_action_service.response.ApiResponse;
 import com.eidiko.supermarket_action_service.services.EmployeeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +20,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/addEmployee")
-    public ResponseEntity<String> addEmployees(@RequestBody Employee employee)
+    public ResponseEntity<ApiResponse<Employee>> addEmployees(@RequestBody Employee employee)
     {
-        return ResponseEntity.ok(employeeService.addEmployees(employee));
+        ApiResponse<Employee> response = new ApiResponse<>(
+                HttpStatus.CREATED,
+                "Employee added successfully",
+                employeeService.addEmployees(employee)
+        );
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-
 
     @PatchMapping("/updateEmployee/{id}")
     public String updateUser(@PathVariable int id,
