@@ -4,6 +4,7 @@ import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundExceptio
 import com.eidiko.supermarket_action_service.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -22,11 +23,15 @@ public class EmployeeRepo {
     }
 
 
-    public String addEmployee(Employee employee)
+    public Employee addEmployee(Employee employee)
     {
         String query="INSERT INTO employees (name,email,password,designation,role,phone_number,joining_date,salary,reporting_to) VALUES (?, ?, ?,?,?,?,?,?,?)";
         jdbcTemplate.update(query,employee.getName(),employee.getEmail(),employee.getPassword(),employee.getDesignation(),employee.getRole(),employee.getPhoneNumber(),employee.getJoiningDate(),employee.getSalary(),employee.getReportingTo());
-        return "employee added";
+        String getEmployeeQuery="select * from employees where email=?";
+        Employee employee1=jdbcTemplate.queryForObject(getEmployeeQuery,
+                new BeanPropertyRowMapper<>(Employee.class),employee.getEmail());
+        System.out.println(employee1);
+        return employee1;
     }
 
     public String deleteEmployee(int id) throws EmployeeNotFoundException {

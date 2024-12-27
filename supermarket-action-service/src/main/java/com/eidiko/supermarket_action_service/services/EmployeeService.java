@@ -14,7 +14,7 @@ public class EmployeeService {
         this.employeeRepo=employeeRepos;
     }
 
-    public String addEmployees(Employee employee)
+    public Employee addEmployees(Employee employee)
     {
         return employeeRepo.addEmployee(employee);
     }
