@@ -1,5 +1,6 @@
 package com.eidiko.supermarket_action_service;
 
+import com.eidiko.supermarket_action_service.model.Stocks;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
