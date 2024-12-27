@@ -8,6 +8,7 @@ import java.util.List;
 public interface IncentiveService {
 
     IncentiveDTO getIncentiveById(int id) throws IncentiveNotFoundException;
+
     List<IncentiveDTO> getAllIncentives();
 
 }

@@ -16,27 +16,13 @@ public class IncentiveMapper implements RowMapper<IncentiveDTO> {
         incentiveDTO.setId(rs.getInt("id"));
         incentiveDTO.setIncentiveAmount(rs.getDouble("incentive_amount"));
 
-        EmployeeDTO employeeDTO = mapEmployee(rs);
+        EmployeeDTO employeeDTO = new EmployeeMapper().mapRow(rs, rowNum);
         incentiveDTO.setEmployeeId(employeeDTO);
 
         SaleDTO saleDTO = mapSale(rs, employeeDTO);
         incentiveDTO.setSaleId(saleDTO);
 
         return incentiveDTO;
-    }
-
-    private EmployeeDTO mapEmployee(ResultSet rs) throws SQLException {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setId(rs.getInt("id"));
-        employeeDTO.setName(rs.getString("name"));
-        employeeDTO.setEmail(rs.getString("email"));
-        employeeDTO.setDesignation(rs.getString("designation"));
-        employeeDTO.setRole(rs.getString("role"));
-        employeeDTO.setPhoneNumber(rs.getString("phone_number"));
-        employeeDTO.setJoiningDate(rs.getDate("joining_date"));
-        employeeDTO.setSalary(rs.getDouble("salary"));
-        employeeDTO.setReportingTo(rs.getInt("reporting_to"));
-        return employeeDTO;
     }
 
     private SaleDTO mapSale(ResultSet rs, EmployeeDTO employeeDTO) throws SQLException {
