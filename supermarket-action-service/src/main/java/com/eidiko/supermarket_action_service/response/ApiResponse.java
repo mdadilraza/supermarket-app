@@ -1,17 +1,15 @@
 package com.eidiko.supermarket_action_service.response;
-
-import com.eidiko.supermarket_action_service.model.Employee;
 import org.springframework.http.HttpStatus;
 public class ApiResponse<T> {
 
     private String message;
     private HttpStatus code;
-    private Employee data;
+    private T data;
 
-    public ApiResponse(HttpStatus httpStatus, String employeeAddedSuccessfully, Employee employee) {
+    public ApiResponse(HttpStatus httpStatus, String employeeAddedSuccessfully,T t) {
     this.code=httpStatus;
     this.message=employeeAddedSuccessfully;
-    this.data=employee;
+    this.data=t;
     }
 
     public String getMessage() {
@@ -30,11 +28,11 @@ public class ApiResponse<T> {
         this.code = code;
     }
 
-    public Employee getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Employee data) {
+    public void setData(T data) {
         this.data = data;
     }
 

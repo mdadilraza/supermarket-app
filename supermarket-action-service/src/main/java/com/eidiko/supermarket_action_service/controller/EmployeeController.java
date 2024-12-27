@@ -19,6 +19,7 @@ public class EmployeeController {
         this.employeeService=employeeService;
     }
 
+    //Add employee
     @PostMapping("/addEmployee")
     public ResponseEntity<ApiResponse<Employee>> addEmployees(@RequestBody Employee employee)
     {
@@ -30,6 +31,7 @@ public class EmployeeController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    //Update employee
     @PatchMapping("/updateEmployee/{id}")
     public String updateUser(@PathVariable int id,
                              @RequestBody Employee employee) {
@@ -43,6 +45,7 @@ public class EmployeeController {
         }
     }
 
+    //delete employee based on id
     @DeleteMapping("/deleteEmployee/{id}")
     public String deleteEmployee(@PathVariable int id) throws EmployeeNotFoundException {
         return employeeService.deleteEmployee(id);
