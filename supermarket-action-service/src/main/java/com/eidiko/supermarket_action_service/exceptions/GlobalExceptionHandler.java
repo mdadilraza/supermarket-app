@@ -1,9 +1,6 @@
 package com.eidiko.supermarket_action_service.exceptions;
-
-import com.eidiko.supermarket_action_service.model.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,4 +12,11 @@ public class GlobalExceptionHandler {
     {
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,exception.getMessage());
     }
+
+    @ExceptionHandler(StockNotFoundException.class)
+    public ProblemDetail handleStockNotFoundException(StockNotFoundException stockNotFoundException)
+    {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,stockNotFoundException.getMessage());
+    }
+
 }

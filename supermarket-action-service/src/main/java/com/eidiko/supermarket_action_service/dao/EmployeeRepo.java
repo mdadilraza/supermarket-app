@@ -28,26 +28,22 @@ public class EmployeeRepo {
         String query="INSERT INTO employees (name,email,password,designation,role,phone_number,joining_date,salary,reporting_to) VALUES (?, ?, ?,?,?,?,?,?,?)";
         jdbcTemplate.update(query,employee.getName(),employee.getEmail(),employee.getPassword(),employee.getDesignation(),employee.getRole(),employee.getPhoneNumber(),employee.getJoiningDate(),employee.getSalary(),employee.getReportingTo());
         String getEmployeeQuery="select * from employees where email=?";
-        Employee employee1=jdbcTemplate.queryForObject(getEmployeeQuery,
+        return  jdbcTemplate.queryForObject(getEmployeeQuery,
                 new BeanPropertyRowMapper<>(Employee.class),employee.getEmail());
-        System.out.println(employee1);
-        return employee1;
     }
 
     public String deleteEmployee(int id) throws EmployeeNotFoundException {
         String sql="delete from employees where id=?";
         int result=jdbcTemplate.update(sql,id);
-        if(result==0)
-        {
-            throw new EmployeeNotFoundException("Employee not found");
+        if (result != 0) {
+            return "employee deleted";
         }
-        return "employee deleted";
+        throw new EmployeeNotFoundException("Employee not found");
     }
 
     public int updateUserDetails(int id, String phoneNumber, String newEmail, String newPassword) {
         StringBuilder sql = new StringBuilder("UPDATE employees SET ");
         List<Object> params = new ArrayList<>();
-        // Dynamically add the columns that are not null
         boolean isFirst = true;
 
         if (phoneNumber != null) {
@@ -73,6 +69,4 @@ public class EmployeeRepo {
         params.add(id);
         return jdbcTemplate.update(sql.toString(), params.toArray());
     }
-
-
 }

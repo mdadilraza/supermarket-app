@@ -1,7 +1,11 @@
 package com.eidiko.supermarket_action_service.controller;
 
+import com.eidiko.supermarket_action_service.exceptions.StockNotFoundException;
+import com.eidiko.supermarket_action_service.model.Employee;
 import com.eidiko.supermarket_action_service.model.Stocks;
+import com.eidiko.supermarket_action_service.response.ApiResponse;
 import com.eidiko.supermarket_action_service.services.StocksService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +20,19 @@ public class StocksController {
         this.stocksService = stocksService;
     }
 
+    //Add stocks
     @PostMapping("/addStocks")
-    public ResponseEntity<String> addStocks(@RequestBody Stocks stocks)
+    public ResponseEntity<ApiResponse<Stocks>> addStocks(@RequestBody Stocks stocks)
     {
-        return ResponseEntity.ok(stocksService.addStocks(stocks));
+        ApiResponse<Stocks> response = new ApiResponse<>(
+                HttpStatus.CREATED,
+                "Stocks added successfully",
+                stocksService.addStocks(stocks)
+        );
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    //Update stocks
     @PatchMapping("/updateStocks/{id}")
     public ResponseEntity<String> updateStocks(@PathVariable int id,@RequestBody Stocks stocks)
     {
@@ -29,10 +40,15 @@ public class StocksController {
         return ResponseEntity.ok("stocks updated successfully");
     }
 
+    //Delete stocks based on id
     @DeleteMapping("/deleteStock/{id}")
-    public ResponseEntity<String> deleteStock(@PathVariable int id)
-    {
-        return ResponseEntity.ok(stocksService.deleteStock(id));
+    public ResponseEntity<ApiResponse<Stocks>> deleteStock(@PathVariable int id) throws StockNotFoundException {
+        ApiResponse<Stocks> response = new ApiResponse<>(
+                HttpStatus.NO_CONTENT,
+                "Stocks DELETED successfully",
+                stocksService.deleteStock(id)
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
