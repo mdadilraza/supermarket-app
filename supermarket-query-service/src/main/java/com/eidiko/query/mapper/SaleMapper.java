@@ -15,7 +15,7 @@ public class SaleMapper implements RowMapper<SaleDTO> {
         saleDTO.setId(rs.getInt("id"));
         saleDTO.setSaleAmount(rs.getDouble("sales_amount"));
         saleDTO.setStocks(rs.getString("stock"));
-
+        saleDTO.setDate(rs.getTimestamp("date").toLocalDateTime());
         EmployeeDTO employeeDTO = new EmployeeMapper().mapRow(rs, rowNum);
         saleDTO.setEmployeeId(employeeDTO);
 

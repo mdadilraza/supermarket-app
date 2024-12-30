@@ -1,19 +1,23 @@
 package com.eidiko.query.dto;
 
+import java.time.LocalDateTime;
+
 public class SaleDTO {
 
     private int id;
     private double saleAmount;
     private String stocks;
+    private LocalDateTime date;
     private EmployeeDTO employeeId;
 
     public SaleDTO() {
     }
 
-    public SaleDTO(int id, double saleAmount, String stocks, EmployeeDTO employeeId) {
+    public SaleDTO(int id, double saleAmount, String stocks, LocalDateTime date, EmployeeDTO employeeId) {
         this.id = id;
         this.saleAmount = saleAmount;
         this.stocks = stocks;
+        this.date = date;
         this.employeeId = employeeId;
     }
 
@@ -41,6 +45,14 @@ public class SaleDTO {
         this.stocks = stocks;
     }
 
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     public EmployeeDTO getEmployeeId() {
         return employeeId;
     }
@@ -55,6 +67,7 @@ public class SaleDTO {
                 "id=" + id +
                 ", saleAmount=" + saleAmount +
                 ", stocks='" + stocks + '\'' +
+                ", date=" + date +
                 ", employeeId=" + employeeId +
                 '}';
     }
