@@ -11,4 +11,5 @@ public interface StockService {
 
     List<Stock> getAllStocks();
 
+    List<Stock> getStocksByName(String name) throws StockNotFoundException;
 }

@@ -35,4 +35,19 @@ public class StockDaoImpl implements StockDAO {
         return mssqlJdbcTemplate.query(query, new StockMapper());
     }
 
+    @Override
+    public List<Stock> findByName(String name) throws StockNotFoundException {
+        String query = "SELECT * FROM stocks WHERE name LIKE ?";
+        try {
+            List<Stock> stockList = mssqlJdbcTemplate.query(query, new StockMapper(), "%" + name + "%");
+            if (stockList.isEmpty()) {
+                throw new StockNotFoundException("Stock Not Found");
+            } else {
+                return stockList;
+            }
+        } catch (EmptyResultDataAccessException e) {
+            throw new StockNotFoundException("Stock Not Found");
+        }
+    }
+
 }

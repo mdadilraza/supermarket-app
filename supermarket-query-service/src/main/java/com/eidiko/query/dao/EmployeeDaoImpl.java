@@ -5,7 +5,6 @@ import com.eidiko.query.exception.EmployeeNotFoundException;
 import com.eidiko.query.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

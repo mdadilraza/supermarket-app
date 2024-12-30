@@ -1,6 +1,5 @@
 package com.eidiko.query.controller;
 
-import com.eidiko.query.dto.EmployeeDTO;
 import com.eidiko.query.dto.IncentiveDTO;
 import com.eidiko.query.exception.IncentiveNotFoundException;
 import com.eidiko.query.response.ApiResponse;
