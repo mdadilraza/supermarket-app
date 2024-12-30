@@ -22,7 +22,7 @@ public class SaleController {
     private SaleService saleService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<SaleDTO>> getEmployeeById(@PathVariable int id)
+    public ResponseEntity<ApiResponse<SaleDTO>> getSaleById(@PathVariable int id)
             throws SaleNotFoundException {
         return ResponseEntity.ok(new ApiResponse<>(
                 HttpStatus.OK,
@@ -32,7 +32,7 @@ public class SaleController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<SaleDTO>>> getAllEmployees() {
+    public ResponseEntity<ApiResponse<List<SaleDTO>>> getAllSales() {
         return ResponseEntity.ok(new ApiResponse<>(
                 HttpStatus.OK,
                 "Sales Fetched",

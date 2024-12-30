@@ -26,4 +26,9 @@ public class StockServiceImpl implements StockService {
         return this.stockDAO.findAll();
     }
 
+    @Override
+    public List<Stock> getStocksByName(String name) throws StockNotFoundException {
+        return this.stockDAO.findByName(name);
+    }
+
 }

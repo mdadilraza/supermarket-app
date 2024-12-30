@@ -11,4 +11,6 @@ public interface StockDAO {
 
     List<Stock> findAll();
 
+    List<Stock> findByName(String name) throws StockNotFoundException;
+
 }

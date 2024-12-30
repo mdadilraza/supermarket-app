@@ -32,11 +32,20 @@ public class StockController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Stock>>> getAllEmployees() {
+    public ResponseEntity<ApiResponse<List<Stock>>> getAllStocks() {
         return ResponseEntity.ok(new ApiResponse<>(
                 HttpStatus.OK,
                 "Stocks Fetched",
                 stockService.getAllStocks()
+        ));
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ApiResponse<List<Stock>>> getStocksByName(@PathVariable String name) throws StockNotFoundException {
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK,
+                "Stocks Fetched",
+                stockService.getStocksByName(name)
         ));
     }
 
