@@ -1,6 +1,7 @@
 package com.eidiko.query.controller;
 
 import com.eidiko.query.dto.EmployeeDTO;
+import com.eidiko.query.dto.EmployeeHierarchyDTO;
 import com.eidiko.query.exception.EmployeeNotFoundException;
 import com.eidiko.query.response.ApiResponse;
 import com.eidiko.query.service.EmployeeService;
@@ -37,6 +38,15 @@ public class EmployeeController {
                 HttpStatus.OK,
                 "Employees Fetched",
                 employeeService.getAllEmployees()
+        ));
+    }
+
+    @GetMapping("/hierarchy")
+    public ResponseEntity<ApiResponse<EmployeeHierarchyDTO>> getHierarchy() throws EmployeeNotFoundException {
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK,
+                "Hierarchy Fetched",
+                employeeService.getAllEmployeesHierarchy()
         ));
     }
 

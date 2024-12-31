@@ -1,6 +1,7 @@
 package com.eidiko.query.dao;
 
 import com.eidiko.query.dto.EmployeeDTO;
+import com.eidiko.query.dto.EmployeeHierarchyDTO;
 import com.eidiko.query.exception.EmployeeNotFoundException;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface EmployeeDAO {
 
     List<EmployeeDTO> findAll();
 
+    EmployeeHierarchyDTO findHierarchy() throws EmployeeNotFoundException;
 }
