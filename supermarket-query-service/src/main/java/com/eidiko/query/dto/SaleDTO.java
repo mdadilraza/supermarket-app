@@ -1,19 +1,20 @@
 package com.eidiko.query.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class SaleDTO {
 
     private int id;
     private double saleAmount;
-    private String stocks;
+    private List<Integer> stocks;
     private LocalDateTime date;
     private EmployeeDTO employeeId;
 
     public SaleDTO() {
     }
 
-    public SaleDTO(int id, double saleAmount, String stocks, LocalDateTime date, EmployeeDTO employeeId) {
+    public SaleDTO(int id, double saleAmount, List<Integer> stocks, LocalDateTime date, EmployeeDTO employeeId) {
         this.id = id;
         this.saleAmount = saleAmount;
         this.stocks = stocks;
@@ -37,11 +38,11 @@ public class SaleDTO {
         this.saleAmount = saleAmount;
     }
 
-    public String getStocks() {
+    public List<Integer> getStocks() {
         return stocks;
     }
 
-    public void setStocks(String stocks) {
+    public void setStocks(List<Integer> stocks) {
         this.stocks = stocks;
     }
 
@@ -66,7 +67,7 @@ public class SaleDTO {
         return "SaleDTO{" +
                 "id=" + id +
                 ", saleAmount=" + saleAmount +
-                ", stocks='" + stocks + '\'' +
+                ", stocks=" + stocks +
                 ", date=" + date +
                 ", employeeId=" + employeeId +
                 '}';
