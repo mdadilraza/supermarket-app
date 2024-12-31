@@ -1,7 +1,7 @@
 package com.eidiko.supermarket_action_service.controller;
 
+import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.exceptions.StockNotFoundException;
-import com.eidiko.supermarket_action_service.model.Employee;
 import com.eidiko.supermarket_action_service.model.Stocks;
 import com.eidiko.supermarket_action_service.response.ApiResponse;
 import com.eidiko.supermarket_action_service.services.StocksService;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class StocksController {
 
     private final StocksService stocksService;
-
 
     public StocksController(StocksService stocksService) {
         this.stocksService = stocksService;
@@ -42,13 +41,25 @@ public class StocksController {
 
     //Delete stocks based on id
     @DeleteMapping("/deleteStock/{id}")
-    public ResponseEntity<ApiResponse<Stocks>> deleteStock(@PathVariable int id) throws StockNotFoundException {
-        ApiResponse<Stocks> response = new ApiResponse<>(
+    public ResponseEntity<ApiResponse<String>> deleteStock(@PathVariable int id) throws StockNotFoundException, EmployeeNotFoundException {
+        ApiResponse<String> response = new ApiResponse<>(
                 HttpStatus.NO_CONTENT,
                 "Stocks DELETED successfully",
                 stocksService.deleteStock(id)
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    @PatchMapping("/updateQuantity/{id}")
+    public ResponseEntity<ApiResponse<?>> updateStockQuantity(@PathVariable int id,@RequestBody Stocks stocks)
+    {
+        ApiResponse<?> apiResponse=new ApiResponse<>(
+                HttpStatus.OK,
+                "Stocks updated successfully",
+                stocksService.updateStockQuantity(id,stocks.getQuantity())
+        );
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
 }

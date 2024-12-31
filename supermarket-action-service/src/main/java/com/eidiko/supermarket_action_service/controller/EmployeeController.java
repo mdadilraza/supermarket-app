@@ -33,16 +33,14 @@ public class EmployeeController {
 
     //Update employee
     @PatchMapping("/updateEmployee/{id}")
-    public String updateUser(@PathVariable int id,
+    public ResponseEntity<ApiResponse<Employee>> updateUser(@PathVariable int id,
                              @RequestBody Employee employee) {
-        System.out.println(employee.getPhoneNumber());
-        int rowsUpdated = employeeService.updateUserDetails(id, employee.getPhoneNumber(),employee.getEmail(),employee.getPassword());
-
-        if (rowsUpdated > 0) {
-            return "Employee details updated successfully!";
-        } else {
-            return "No employee found with the given ID!";
-        }
+       ApiResponse<Employee>apiResponse=new ApiResponse<>(
+               HttpStatus.OK,
+               "employee details updated successfully",
+               employeeService.updateUserDetails(id, employee.getPhoneNumber(),employee.getEmail(),employee.getPassword())
+       );
+       return new ResponseEntity<>(apiResponse,HttpStatus.CREATED);
     }
 
     //delete employee based on id

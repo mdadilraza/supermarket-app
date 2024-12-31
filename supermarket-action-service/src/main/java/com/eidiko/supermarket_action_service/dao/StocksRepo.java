@@ -1,9 +1,11 @@
 package com.eidiko.supermarket_action_service.dao;
 
+import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.exceptions.StockNotFoundException;
 import com.eidiko.supermarket_action_service.model.Stocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -36,7 +38,6 @@ public class StocksRepo {
         List<Object> params = new ArrayList<>();
         // Dynamically add the columns that are not null
         boolean isFirst = true;
-
         if (stocks.getName() != null) {
             System.out.println(stocks.getName() );
             sql.append("name = ?");
@@ -61,16 +62,36 @@ public class StocksRepo {
         return jdbcTemplate.update(sql.toString(), params.toArray());
     }
 
-    public Stocks deleteStock(int id) throws StockNotFoundException {
-        String getQuery="select * from stocks where id=?";
-        Stocks stocks= jdbcTemplate.queryForObject(getQuery,new BeanPropertyRowMapper<>(Stocks.class),id);
-
-        String query="delete from stocks where id=?";
-        int result=jdbcTemplate.update(query,id);
-        if(result==0)
-        {
-            throw new StockNotFoundException("Stock is not available");
+    public String deleteStock(int id) throws StockNotFoundException, EmployeeNotFoundException {
+        String sql="delete from stocks where id=?";
+        int result=jdbcTemplate.update(sql,id);
+        if (result != 0) {
+            return "stocks deleted";
         }
-        return stocks;
+        throw new EmployeeNotFoundException("Stock not found");
     }
+
+
+    public String updateStockQuantity(int stockId,int sellQuantity)
+    {
+        String getStock="select * from stocks where id=?";
+        Stocks stocks=jdbcTemplate.queryForObject(getStock,new BeanPropertyRowMapper<>(Stocks.class),stockId);
+        System.out.println(stocks);
+        String query="UPDATE stocks SET quantity = ? WHERE id = ?";
+        assert stocks != null;
+        int totalQuantity = stocks.getQuantity();
+        int updatedQuantity = totalQuantity - sellQuantity;
+        if (updatedQuantity >= 0) {
+            String updateQuery = "UPDATE stocks SET quantity = ? WHERE id = ?";
+            int res = jdbcTemplate.update(updateQuery, updatedQuantity, stockId);
+            if (res > 0) {
+                return "Stocks updated successfully";
+            } else {
+                return "No rows affected, stock update failed";
+            }
+        } else {
+            return "Insufficient stock to complete the sale";
+        }
+    }
+
 }

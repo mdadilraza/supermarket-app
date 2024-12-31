@@ -4,6 +4,7 @@ import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundExceptio
 import com.eidiko.supermarket_action_service.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -41,13 +42,12 @@ public class EmployeeRepo {
         throw new EmployeeNotFoundException("Employee not found");
     }
 
-    public int updateUserDetails(int id, String phoneNumber, String newEmail, String newPassword) {
+    public Employee updateUserDetails(int id, String phoneNumber, String newEmail, String newPassword) {
         StringBuilder sql = new StringBuilder("UPDATE employees SET ");
         List<Object> params = new ArrayList<>();
         boolean isFirst = true;
 
         if (phoneNumber != null) {
-            System.out.println(phoneNumber);
             sql.append("phone_number = ?");
             params.add(phoneNumber);
             isFirst = false;
@@ -67,6 +67,10 @@ public class EmployeeRepo {
         }
         sql.append(" WHERE id = ?");
         params.add(id);
-        return jdbcTemplate.update(sql.toString(), params.toArray());
+        String resQuery="select * from employees where id=?";
+        Employee employee=jdbcTemplate.queryForObject(resQuery,new BeanPropertyRowMapper<>(Employee.class),id);
+        jdbcTemplate.update(sql.toString(), params.toArray());
+        System.out.println(employee);
+        return employee;
     }
 }

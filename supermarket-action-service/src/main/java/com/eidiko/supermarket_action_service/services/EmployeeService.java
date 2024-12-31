@@ -19,7 +19,7 @@ public class EmployeeService {
         return employeeRepo.addEmployee(employee);
     }
 
-    public int updateUserDetails(int userId, String newPhoneNumber, String newEmail, String newPassword) {
+    public Employee updateUserDetails(int userId, String newPhoneNumber, String newEmail, String newPassword) {
     return employeeRepo.updateUserDetails(userId,newPhoneNumber,newEmail,newPassword);
     }
 
