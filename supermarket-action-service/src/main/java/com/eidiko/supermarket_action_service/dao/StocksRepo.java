@@ -1,6 +1,7 @@
 package com.eidiko.supermarket_action_service.dao;
 
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
+import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
 import com.eidiko.supermarket_action_service.exceptions.StockNotFoundException;
 import com.eidiko.supermarket_action_service.model.Stocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,13 @@ public class StocksRepo {
        return jdbcTemplate.queryForObject(query,new BeanPropertyRowMapper<>(Stocks.class),stock.getName());
     }
 
-    public int updateStocks(int id,Stocks stocks)
+    public Stocks updateStocks(int id,Stocks stocks)
     {
+        int totalQuantity=0;
         StringBuilder sql=new StringBuilder("update stocks set ");
         List<Object> params = new ArrayList<>();
-        // Dynamically add the columns that are not null
         boolean isFirst = true;
         if (stocks.getName() != null) {
-            System.out.println(stocks.getName() );
             sql.append("name = ?");
             params.add(stocks.getName() );
             isFirst = false;
@@ -56,10 +56,23 @@ public class StocksRepo {
             if (!isFirst) sql.append(", ");
             sql.append("price = ?");
             params.add(stocks.getPrice());
+            isFirst = false;
+        }
+        if(stocks.getQuantity()!=0)
+        {
+            if (!isFirst) sql.append(", ");
+            sql.append("quantity = ?");
+            params.add(stocks.getQuantity());
+            totalQuantity= stocks.getQuantity();
         }
         sql.append(" WHERE id = ?");
         params.add(id);
-        return jdbcTemplate.update(sql.toString(), params.toArray());
+        jdbcTemplate.update(sql.toString(), params.toArray());
+        String resQuery="select * from stocks where id= ?";
+        Stocks stocks1=jdbcTemplate.queryForObject(resQuery,new BeanPropertyRowMapper<>(Stocks.class),id);
+        assert stocks1 != null;
+        stocks1.setQuantity(totalQuantity);
+         return stocks1;
     }
 
     public String deleteStock(int id) throws StockNotFoundException, EmployeeNotFoundException {
@@ -72,25 +85,24 @@ public class StocksRepo {
     }
 
 
-    public String updateStockQuantity(int stockId,int sellQuantity)
-    {
+    public Stocks updateStockQuantity(int stockId,int sellQuantity) throws InsufficientStockException {
         String getStock="select * from stocks where id=?";
         Stocks stocks=jdbcTemplate.queryForObject(getStock,new BeanPropertyRowMapper<>(Stocks.class),stockId);
-        System.out.println(stocks);
-        String query="UPDATE stocks SET quantity = ? WHERE id = ?";
         assert stocks != null;
         int totalQuantity = stocks.getQuantity();
         int updatedQuantity = totalQuantity - sellQuantity;
+        stocks.setQuantity(updatedQuantity);
         if (updatedQuantity >= 0) {
             String updateQuery = "UPDATE stocks SET quantity = ? WHERE id = ?";
             int res = jdbcTemplate.update(updateQuery, updatedQuantity, stockId);
             if (res > 0) {
-                return "Stocks updated successfully";
+                stocks.setQuantity(updatedQuantity);
+                return stocks;
             } else {
-                return "No rows affected, stock update failed";
+                throw new RuntimeException("No rows affected, stock update failed");
             }
         } else {
-            return "Insufficient stock to complete the sale";
+            throw new InsufficientStockException("Insufficient stock to complete the sale");
         }
     }
 

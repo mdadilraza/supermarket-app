@@ -1,6 +1,7 @@
 package com.eidiko.supermarket_action_service.controller;
 
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
+import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
 import com.eidiko.supermarket_action_service.exceptions.StockNotFoundException;
 import com.eidiko.supermarket_action_service.model.Stocks;
 import com.eidiko.supermarket_action_service.response.ApiResponse;
@@ -31,12 +32,16 @@ public class StocksController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    //Update stocks
+    //Update stocks details
     @PatchMapping("/updateStocks/{id}")
-    public ResponseEntity<String> updateStocks(@PathVariable int id,@RequestBody Stocks stocks)
+    public ResponseEntity<ApiResponse<Stocks>> updateStocks(@PathVariable int id,@RequestBody Stocks stocks)
     {
-        stocksService.updateStocks(id,stocks);
-        return ResponseEntity.ok("stocks updated successfully");
+        ApiResponse<Stocks>apiResponse=new ApiResponse<>(
+                HttpStatus.OK,
+                "Stock details updated successfully",
+                stocksService.updateStocks(id,stocks)
+        );
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
     //Delete stocks based on id
@@ -51,9 +56,9 @@ public class StocksController {
     }
 
 
+    //Updated stocks quantity
     @PatchMapping("/updateQuantity/{id}")
-    public ResponseEntity<ApiResponse<?>> updateStockQuantity(@PathVariable int id,@RequestBody Stocks stocks)
-    {
+    public ResponseEntity<ApiResponse<?>> updateStockQuantity(@PathVariable int id, @RequestBody Stocks stocks) throws InsufficientStockException {
         ApiResponse<?> apiResponse=new ApiResponse<>(
                 HttpStatus.OK,
                 "Stocks updated successfully",
