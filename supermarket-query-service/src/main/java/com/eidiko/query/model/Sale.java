@@ -1,19 +1,20 @@
 package com.eidiko.query.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Sale {
 
     private int id;
     private double saleAmount;
-    private String stocks;
+    private List<Integer> stocks;
     private LocalDateTime date = LocalDateTime.now();
     private Employee employeeId;
 
     public Sale() {
     }
 
-    public Sale(int id, double saleAmount, String stocks, LocalDateTime date, Employee employeeId) {
+    public Sale(int id, double saleAmount, List<Integer> stocks, LocalDateTime date, Employee employeeId) {
         this.id = id;
         this.saleAmount = saleAmount;
         this.stocks = stocks;
@@ -37,11 +38,11 @@ public class Sale {
         this.saleAmount = saleAmount;
     }
 
-    public String getStocks() {
+    public List<Integer> getStocks() {
         return stocks;
     }
 
-    public void setStocks(String stocks) {
+    public void setStocks(List<Integer> stocks) {
         this.stocks = stocks;
     }
 
@@ -66,7 +67,7 @@ public class Sale {
         return "Sale{" +
                 "id=" + id +
                 ", saleAmount=" + saleAmount +
-                ", stocks='" + stocks + '\'' +
+                ", stocks=" + stocks +
                 ", date=" + date +
                 ", employeeId=" + employeeId +
                 '}';
