@@ -2,6 +2,7 @@ package com.eidiko.query.service;
 
 import com.eidiko.query.dao.EmployeeDAO;
 import com.eidiko.query.dto.EmployeeDTO;
+import com.eidiko.query.dto.EmployeeHierarchyDTO;
 import com.eidiko.query.exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeDTO> getAllEmployees() {
         return employeeDAO.findAll();
+    }
+
+    @Override
+    public EmployeeHierarchyDTO getAllEmployeesHierarchy() throws EmployeeNotFoundException {
+        return employeeDAO.findHierarchy();
     }
 
 }

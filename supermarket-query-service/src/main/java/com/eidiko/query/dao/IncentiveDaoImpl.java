@@ -21,14 +21,14 @@ public class IncentiveDaoImpl implements IncentiveDAO {
 
 
     @Override
-    public IncentiveDTO findById(int id) throws IncentiveNotFoundException {
+    public IncentiveDTO findById(int employeeId) throws IncentiveNotFoundException {
         String query = "SELECT * " +
                 "FROM incentives i " +
                 "JOIN employees e ON i.employee_id = e.id " +
                 "JOIN sales s ON s.employee_id = e.id " +
                 "WHERE e.id = ?";
         try {
-            return postgresqlJdbcTemplate.queryForObject(query, new IncentiveMapper(), id);
+            return postgresqlJdbcTemplate.queryForObject(query, new IncentiveMapper(), employeeId);
         } catch (EmptyResultDataAccessException e) {
             throw new IncentiveNotFoundException("Incentive not found");
         }
