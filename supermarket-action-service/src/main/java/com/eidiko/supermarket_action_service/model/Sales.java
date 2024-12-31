@@ -1,5 +1,7 @@
 package com.eidiko.supermarket_action_service.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Sales {

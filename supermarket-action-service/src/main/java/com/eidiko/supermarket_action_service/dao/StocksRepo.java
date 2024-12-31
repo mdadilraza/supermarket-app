@@ -6,7 +6,6 @@ import com.eidiko.supermarket_action_service.exceptions.StockNotFoundException;
 import com.eidiko.supermarket_action_service.model.Stocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -105,5 +104,4 @@ public class StocksRepo {
             throw new InsufficientStockException("Insufficient stock to complete the sale");
         }
     }
-
 }

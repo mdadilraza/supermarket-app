@@ -57,12 +57,12 @@ public class StocksController {
 
 
     //Updated stocks quantity
-    @PatchMapping("/updateQuantity/{id}")
-    public ResponseEntity<ApiResponse<?>> updateStockQuantity(@PathVariable int id, @RequestBody Stocks stocks) throws InsufficientStockException {
+    @PatchMapping("/updateQuantity")
+    public ResponseEntity<ApiResponse<?>> updateStockQuantity(@RequestParam int id, @RequestParam int sellQuantity) throws InsufficientStockException {
         ApiResponse<?> apiResponse=new ApiResponse<>(
                 HttpStatus.OK,
                 "Stocks updated successfully",
-                stocksService.updateStockQuantity(id,stocks.getQuantity())
+                stocksService.updateStockQuantity(id,sellQuantity)
         );
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }

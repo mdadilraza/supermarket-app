@@ -4,7 +4,6 @@ import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundExceptio
 import com.eidiko.supermarket_action_service.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
