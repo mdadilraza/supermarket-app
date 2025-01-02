@@ -3,8 +3,13 @@ package com.eidiko.query.controller;
 import com.eidiko.query.dto.EmployeeDTO;
 import com.eidiko.query.dto.EmployeeHierarchyDTO;
 import com.eidiko.query.exception.EmployeeNotFoundException;
-import com.eidiko.query.response.ApiResponse;
+import com.eidiko.query.response.ApiResponseEntity;
 import com.eidiko.query.service.EmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +22,28 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
+@Tag(name = "Employee")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<EmployeeDTO>> getEmployeeById(@PathVariable int id)
+    @Operation(
+            summary = "gets employee using employee id",
+            description = "this end point allows to fetch employee data by using employee id",
+            parameters = {
+                    @Parameter(name = "id", description = "Employee Id", required = true, in = ParameterIn.PATH)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error")
+            }
+    )
+    public ResponseEntity<ApiResponseEntity<EmployeeDTO>> getEmployeeById(@PathVariable int id)
             throws EmployeeNotFoundException {
-        return ResponseEntity.ok(new ApiResponse<>(
+        return ResponseEntity.ok(new ApiResponseEntity<>(
                 HttpStatus.OK,
                 "Employee Fetched",
                 employeeService.getEmployeeById(id)
@@ -33,8 +51,17 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<EmployeeDTO>>> getAllEmployees() {
-        return ResponseEntity.ok(new ApiResponse<>(
+    @Operation(
+            summary = "gets all employees",
+            description = "this end point allows to fetch all employees data",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error")
+            }
+    )
+    public ResponseEntity<ApiResponseEntity<List<EmployeeDTO>>> getAllEmployees() {
+        return ResponseEntity.ok(new ApiResponseEntity<>(
                 HttpStatus.OK,
                 "Employees Fetched",
                 employeeService.getAllEmployees()
@@ -42,8 +69,17 @@ public class EmployeeController {
     }
 
     @GetMapping("/hierarchy")
-    public ResponseEntity<ApiResponse<EmployeeHierarchyDTO>> getHierarchy() throws EmployeeNotFoundException {
-        return ResponseEntity.ok(new ApiResponse<>(
+    @Operation(
+            summary = "gets all employee hierarchy",
+            description = "this end point allows to fetch all employee hierarchy",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error")
+            }
+    )
+    public ResponseEntity<ApiResponseEntity<EmployeeHierarchyDTO>> getHierarchy() throws EmployeeNotFoundException {
+        return ResponseEntity.ok(new ApiResponseEntity<>(
                 HttpStatus.OK,
                 "Hierarchy Fetched",
                 employeeService.getAllEmployeesHierarchy()
@@ -51,9 +87,21 @@ public class EmployeeController {
     }
 
     @GetMapping("/hierarchy/{id}")
-    public ResponseEntity<ApiResponse<List<Integer>>> getHierarchyById(@PathVariable int id)
+    @Operation(
+            summary = "gets employee hierarchy employee id",
+            description = "this end point allows to fetch employee hierarchy by using employee id",
+            parameters = {
+                    @Parameter(name = "id", description = "Employee Id", required = true, in = ParameterIn.PATH)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error")
+            }
+    )
+    public ResponseEntity<ApiResponseEntity<List<Integer>>> getHierarchyById(@PathVariable int id)
             throws EmployeeNotFoundException {
-        return ResponseEntity.ok(new ApiResponse<>(
+        return ResponseEntity.ok(new ApiResponseEntity<>(
                 HttpStatus.OK,
                 "Hierarchy Fetched",
                 employeeService.getEmployeeHierarchyById(id)

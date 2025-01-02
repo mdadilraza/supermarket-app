@@ -17,7 +17,7 @@ public class IncentiveServiceImpl implements IncentiveService {
     }
 
     @Override
-    public IncentiveDTO getIncentiveById(int id) throws IncentiveNotFoundException {
+    public List<IncentiveDTO> getIncentiveById(int id) throws IncentiveNotFoundException {
         return incentiveDAO.findById(id);
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IncentiveDAO {
 
-    IncentiveDTO findById(int id) throws IncentiveNotFoundException;
+    List<IncentiveDTO> findById(int id) throws IncentiveNotFoundException;
 
     List<IncentiveDTO> findAll();
 
