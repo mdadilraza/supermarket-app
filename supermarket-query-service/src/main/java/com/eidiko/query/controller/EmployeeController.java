@@ -50,4 +50,14 @@ public class EmployeeController {
         ));
     }
 
+    @GetMapping("/hierarchy/{id}")
+    public ResponseEntity<ApiResponse<List<Integer>>> getHierarchyById(@PathVariable int id)
+            throws EmployeeNotFoundException {
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK,
+                "Hierarchy Fetched",
+                employeeService.getEmployeeHierarchyById(id)
+        ));
+    }
+
 }

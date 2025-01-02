@@ -50,4 +50,14 @@ public class GlobalExceptionHandler {
         return problemDetail;
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ProblemDetail handleIllegalStateException(IllegalStateException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        problemDetail.setTitle("Internal Server Error");
+        problemDetail.setDetail(e.getMessage());
+        problemDetail.setProperty("timestamp", LocalDateTime.now());
+        problemDetail.setProperty("exception", e.getClass().getName());
+        return problemDetail;
+    }
+
 }
