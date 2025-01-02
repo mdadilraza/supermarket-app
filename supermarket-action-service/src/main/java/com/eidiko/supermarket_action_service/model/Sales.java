@@ -1,6 +1,4 @@
 package com.eidiko.supermarket_action_service.model;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -8,15 +6,20 @@ public class Sales {
 
     private int id;
     private double salesAmount;
-    private Employee employeeId;
+    private int employeeId;
     private List<Integer> stockId;
+    private LocalDateTime saleDate;
 
-    public int getId() {
-        return id;
+    public Sales()
+    {
+        super();
     }
 
-    public void setId(int id) {
+    public Sales(int id, double salesAmount, int employeeId, List<Integer> stockId) {
         this.id = id;
+        this.salesAmount = salesAmount;
+        this.employeeId = employeeId;
+        this.stockId = stockId;
     }
 
     public double getSalesAmount() {
@@ -27,11 +30,19 @@ public class Sales {
         this.salesAmount = salesAmount;
     }
 
-    public Employee getEmployeeId() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Employee employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -41,6 +52,14 @@ public class Sales {
 
     public void setStockId(List<Integer> stockId) {
         this.stockId = stockId;
+    }
+
+    public LocalDateTime getSaleDate() {
+        return saleDate;
+    }
+
+    public void setSaleDate(LocalDateTime saleDate) {
+        this.saleDate = saleDate;
     }
 
     @Override

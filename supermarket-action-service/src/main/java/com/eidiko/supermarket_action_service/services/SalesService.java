@@ -1,25 +1,24 @@
 package com.eidiko.supermarket_action_service.services;
-
+import com.eidiko.supermarket_action_service.dao.SalesRepo;
+import com.eidiko.supermarket_action_service.dto.SalesDto;
 import com.eidiko.supermarket_action_service.model.Sales;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SalesService {
 
-    private final JdbcTemplate jdbcTemplate;
+   private final SalesRepo salesRepo;
 
-    public SalesService(@Qualifier("postgresqlJdbcTemplate") JdbcTemplate jdbcTemplate)
-    {
-        this.jdbcTemplate=jdbcTemplate;
-    }
+   @Autowired
+   public SalesService(SalesRepo salesRepo)
+   {
+       this.salesRepo=salesRepo;
+   }
 
-    public String addSales(Sales sales)
-    {
-        String sql="insert into sales values (id,salesAmount,employeeId,stockId)";
-        jdbcTemplate.update(sql,sales.getId(),sales.getSalesAmount(),sales.getEmployeeId(),sales.getStockId());
-        return "added";
-    }
+   public Sales addSales(SalesDto salesDto)
+   {
+      return salesRepo.addSales(salesDto);
+   }
 
 }
