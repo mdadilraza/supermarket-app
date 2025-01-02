@@ -1,17 +1,18 @@
 package com.eidiko.query.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.HttpStatus;
 
-public class ApiResponse<T> {
+public class ApiResponseEntity<T> {
 
     private HttpStatus code;
     private String message;
     private T data;
 
-    public ApiResponse() {
+    public ApiResponseEntity() {
     }
 
-    public ApiResponse(HttpStatus code, String message, T data) {
+    public ApiResponseEntity(HttpStatus code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
