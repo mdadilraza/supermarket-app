@@ -4,14 +4,16 @@ import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundExceptio
 import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
 import com.eidiko.supermarket_action_service.exceptions.StockNotFoundException;
 import com.eidiko.supermarket_action_service.model.Stocks;
-import com.eidiko.supermarket_action_service.response.ApiResponse;
+import com.eidiko.supermarket_action_service.response.ApiResponseEntity;
 import com.eidiko.supermarket_action_service.services.StocksService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/stocks/api")
+@Tag(name = "Stocks_Api")
 public class StocksController {
 
     private final StocksService stocksService;
@@ -22,9 +24,9 @@ public class StocksController {
 
     //Add stocks
     @PostMapping("/addStocks")
-    public ResponseEntity<ApiResponse<Stocks>> addStocks(@RequestBody Stocks stocks)
+    public ResponseEntity<ApiResponseEntity<Stocks>> addStocks(@RequestBody Stocks stocks)
     {
-        ApiResponse<Stocks> response = new ApiResponse<>(
+        ApiResponseEntity<Stocks> response = new ApiResponseEntity<>(
                 HttpStatus.CREATED,
                 "Stocks added successfully",
                 stocksService.addStocks(stocks)
@@ -34,20 +36,20 @@ public class StocksController {
 
     //Update stocks details
     @PatchMapping("/updateStocks/{id}")
-    public ResponseEntity<ApiResponse<Stocks>> updateStocks(@PathVariable int id,@RequestBody Stocks stocks)
+    public ResponseEntity<ApiResponseEntity<Stocks>> updateStocks(@PathVariable int id, @RequestBody Stocks stocks)
     {
-        ApiResponse<Stocks>apiResponse=new ApiResponse<>(
+        ApiResponseEntity<Stocks> apiResponseEntity =new ApiResponseEntity<>(
                 HttpStatus.OK,
                 "Stock details updated successfully",
                 stocksService.updateStocks(id,stocks)
         );
-        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+        return new ResponseEntity<>(apiResponseEntity,HttpStatus.OK);
     }
 
     //Delete stocks based on id
     @DeleteMapping("/deleteStock/{id}")
-    public ResponseEntity<ApiResponse<String>> deleteStock(@PathVariable int id) throws StockNotFoundException, EmployeeNotFoundException {
-        ApiResponse<String> response = new ApiResponse<>(
+    public ResponseEntity<ApiResponseEntity<String>> deleteStock(@PathVariable int id) throws StockNotFoundException, EmployeeNotFoundException {
+        ApiResponseEntity<String> response = new ApiResponseEntity<>(
                 HttpStatus.NO_CONTENT,
                 "Stocks DELETED successfully",
                 stocksService.deleteStock(id)
@@ -58,13 +60,13 @@ public class StocksController {
 
     //Updated stocks quantity
     @PatchMapping("/updateQuantity")
-    public ResponseEntity<ApiResponse<?>> updateStockQuantity(@RequestParam int id, @RequestParam int sellQuantity) throws InsufficientStockException {
-        ApiResponse<?> apiResponse=new ApiResponse<>(
+    public ResponseEntity<ApiResponseEntity<?>> updateStockQuantity(@RequestParam int id, @RequestParam int sellQuantity) throws InsufficientStockException {
+        ApiResponseEntity<?> apiResponseEntity =new ApiResponseEntity<>(
                 HttpStatus.OK,
                 "Stocks updated successfully",
                 stocksService.updateStockQuantity(id,sellQuantity)
         );
-        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+        return new ResponseEntity<>(apiResponseEntity,HttpStatus.OK);
     }
 
 }
