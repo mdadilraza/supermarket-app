@@ -14,4 +14,6 @@ public interface EmployeeService {
 
     EmployeeHierarchyDTO getAllEmployeesHierarchy() throws EmployeeNotFoundException;
 
+    List<Integer> getEmployeeHierarchyById(int id) throws EmployeeNotFoundException;
+
 }

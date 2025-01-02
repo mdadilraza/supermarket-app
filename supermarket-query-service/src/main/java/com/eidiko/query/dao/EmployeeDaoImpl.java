@@ -51,6 +51,38 @@ public class EmployeeDaoImpl implements EmployeeDAO {
         return buildHierarchy(employeeDTO, visitedEmployees);
     }
 
+    @Override
+    public List<Integer> findHierarchyById(int id) throws EmployeeNotFoundException {
+        Set<Integer> visited = new HashSet<>();
+        List<Integer> hierarchyList = new ArrayList<>();
+        fetchEmployeeHierarchy(id, hierarchyList, visited);
+        return hierarchyList;
+    }
+
+    private void fetchEmployeeHierarchy(int employeeId, List<Integer> hierarchyList, Set<Integer> visited)
+            throws EmployeeNotFoundException {
+
+        if (visited.contains(employeeId)) {
+            throw new IllegalStateException(
+                    "Circular dependency detected in employee hierarchy for Employee ID: " + employeeId
+            );
+        }
+
+        visited.add(employeeId);
+
+        EmployeeDTO employeeDTO = findById(employeeId);
+        EmployeeDTO manager = findById(employeeDTO.getReportingTo());
+
+        hierarchyList.add(manager.getId());
+        if (manager.getDesignation().contains("Sales Supervisor")) {
+            return;
+        }
+
+        if (manager.getReportingTo() != 0) {
+            fetchEmployeeHierarchy(manager.getId(), hierarchyList, visited);
+        }
+    }
+
     private EmployeeHierarchyDTO buildHierarchy(EmployeeDTO employeeDTO, Set<Integer> visitedEmployees) {
         // Check if the employee has already been visited to avoid infinite recursion
         if (visitedEmployees.contains(employeeDTO.getId())) {
@@ -61,6 +93,10 @@ public class EmployeeDaoImpl implements EmployeeDAO {
         // Mark the current employee as visited
         visitedEmployees.add(employeeDTO.getId());
 
+        return createEmployeeHierarchy(employeeDTO, visitedEmployees);
+    }
+
+    private EmployeeHierarchyDTO createEmployeeHierarchy(EmployeeDTO employeeDTO, Set<Integer> visitedEmployees) {
         // Create EmployeeHierarchyDTO for the employee
         EmployeeHierarchyDTO employeeHierarchyDTO = new EmployeeHierarchyDTO();
         employeeHierarchyDTO.setId(employeeDTO.getId());

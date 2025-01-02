@@ -32,4 +32,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDAO.findHierarchy();
     }
 
+    @Override
+    public List<Integer> getEmployeeHierarchyById(int id) throws EmployeeNotFoundException {
+        return employeeDAO.findHierarchyById(id);
+    }
+
 }

@@ -13,4 +13,6 @@ public interface EmployeeDAO {
     List<EmployeeDTO> findAll();
 
     EmployeeHierarchyDTO findHierarchy() throws EmployeeNotFoundException;
+
+    List<Integer> findHierarchyById(int id) throws EmployeeNotFoundException;
 }
