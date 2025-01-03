@@ -1,6 +1,7 @@
 package com.eidiko.supermarket_action_service.controller;
 
 import com.eidiko.supermarket_action_service.dto.SaleRequest;
+import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.model.Sales;
 import com.eidiko.supermarket_action_service.response.ApiResponseEntity;
 import com.eidiko.supermarket_action_service.services.SalesService;
@@ -26,8 +27,7 @@ public class SalesController {
     }
 
     @PostMapping("/addSales")
-    public ResponseEntity<ApiResponseEntity<Sales>> addSales(@RequestBody SaleRequest saleRequest)
-    {
+    public ResponseEntity<ApiResponseEntity<Sales>> addSales(@RequestBody SaleRequest saleRequest) throws EmployeeNotFoundException {
         ApiResponseEntity<Sales> apiResponseEntity =new ApiResponseEntity<>(
                 HttpStatus.CREATED,
                 "Sales added",
