@@ -1,0 +1,19 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: supermarket-integration-service
+
+  datasource:
+    postgresql:
+      url: jdbc:postgresql://10.0.0.42:5432/supermarket_db
+      username: supermarket
+      password: supermarket
+      driverClassName: org.postgresql.Driver
+
+    mssql:
+      url: jdbc:sqlserver://10.0.0.42:49170;databaseName=supermarket_db;encrypt=true;trustServerCertificate=true
+      username: supermarket
+      password: supermarket
+      driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
