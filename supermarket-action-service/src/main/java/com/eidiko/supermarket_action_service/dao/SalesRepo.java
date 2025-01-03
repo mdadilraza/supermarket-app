@@ -1,6 +1,6 @@
 package com.eidiko.supermarket_action_service.dao;
 
-import com.eidiko.supermarket_action_service.dto.SalesDto;
+import com.eidiko.supermarket_action_service.dto.SaleRequest;
 import com.eidiko.supermarket_action_service.model.Sales;
 import com.eidiko.supermarket_action_service.model.Stocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +27,9 @@ public class SalesRepo {
         this.postJdbcTemplate=postgresJdbc;
     }
 
-    public Sales addSales(SalesDto salesDto)
+    public Sales addSales(SaleRequest saleRequest)
     {
-        List<Stocks>list =salesDto.getStocks();
+        List<Stocks>list = saleRequest.getStocks();
         List<Integer>resultList=new ArrayList<>();
         double totalAmount=0;
         for(Stocks stocks:list)
@@ -40,18 +41,17 @@ public class SalesRepo {
             double total=stocks1.getPrice()*stocks.getQuantity();
             totalAmount=totalAmount+total;
         }
-        salesDto.setSalesAmount(totalAmount);
         Sales sales=new Sales();
-        sales.setSalesAmount(salesDto.getSalesAmount());
-        sales.setEmployeeId(salesDto.getEmployeeId());
         sales.setStockId(resultList);
-        sales.setSaleDate(salesDto.getSaleDate());
-        java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(sales.getSaleDate());
+        sales.setSalesAmount(totalAmount);
+        sales.setEmployeeId(saleRequest.getEmployeeId());
         Integer[] stockArray = sales.getStockId().toArray(new Integer[0]);
+        Timestamp timestamp = Timestamp.valueOf(sales.getSaleDate());
         String query="INSERT INTO sales (sales_amount, stock, date, employee_id) VALUES (?,?,?,?)";
         int update = postJdbcTemplate.update(query, sales.getSalesAmount(), stockArray, timestamp, sales.getEmployeeId());
         return sales;
     }
+
 
 
 }
