@@ -1,20 +1,20 @@
-package com.eidiko.supermarket_integration_service.model;
+package com.eidiko.supermarket_integration_service.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Sale {
+public class SaleDTO {
 
     private int id;
     private double saleAmount;
     private List<Integer> stocks;
     private LocalDateTime date = LocalDateTime.now();
-    private Employee employeeId;
+    private EmployeeDTO employeeId;
 
-    public Sale() {
+    public SaleDTO() {
     }
 
-    public Sale(int id, double saleAmount, List<Integer> stocks, LocalDateTime date, Employee employeeId) {
+    public SaleDTO(int id, double saleAmount, List<Integer> stocks, LocalDateTime date, EmployeeDTO employeeId) {
         this.id = id;
         this.saleAmount = saleAmount;
         this.stocks = stocks;
@@ -54,17 +54,17 @@ public class Sale {
         this.date = date;
     }
 
-    public Employee getEmployeeId() {
+    public EmployeeDTO getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Employee employeeId) {
+    public void setEmployeeId(EmployeeDTO employeeId) {
         this.employeeId = employeeId;
     }
 
     @Override
     public String toString() {
-        return "Sale{" +
+        return "SaleDTO{" +
                 "id=" + id +
                 ", saleAmount=" + saleAmount +
                 ", stocks=" + stocks +

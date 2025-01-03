@@ -1,24 +1,20 @@
-package com.eidiko.query.model;
+package com.eidiko.supermarket_integration_service.dto;
 
-import java.time.LocalDate;
-
-public class Incentive {
+public class IncentiveDTO {
 
     private int id;
     private double incentiveAmount;
-    private Employee employeeId;
-    private Sale saleId;
-    private LocalDate date = LocalDate.now();
+    private EmployeeDTO employeeId;
+    private SaleDTO saleId;
 
-    public Incentive() {
+    public IncentiveDTO() {
     }
 
-    public Incentive(int id, double incentiveAmount, Employee employeeId, Sale saleId, LocalDate date) {
+    public IncentiveDTO(int id, double incentiveAmount, EmployeeDTO employeeId, SaleDTO saleId) {
         this.id = id;
         this.incentiveAmount = incentiveAmount;
         this.employeeId = employeeId;
         this.saleId = saleId;
-        this.date = date;
     }
 
     public int getId() {
@@ -37,38 +33,29 @@ public class Incentive {
         this.incentiveAmount = incentiveAmount;
     }
 
-    public Employee getEmployeeId() {
+    public EmployeeDTO getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Employee employeeId) {
+    public void setEmployeeId(EmployeeDTO employeeId) {
         this.employeeId = employeeId;
     }
 
-    public Sale getSaleId() {
+    public SaleDTO getSaleId() {
         return saleId;
     }
 
-    public void setSaleId(Sale saleId) {
+    public void setSaleId(SaleDTO saleId) {
         this.saleId = saleId;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     @Override
     public String toString() {
-        return "Incentive{" +
+        return "IncentiveDTO{" +
                 "id=" + id +
                 ", incentiveAmount=" + incentiveAmount +
                 ", employeeId=" + employeeId +
                 ", saleId=" + saleId +
-                ", date=" + date +
                 '}';
     }
 

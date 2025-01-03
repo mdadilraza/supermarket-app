@@ -1,8 +1,10 @@
 package com.eidiko.supermarket_action_service.services;
 
 import com.eidiko.supermarket_action_service.dao.StocksRepo;
+import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
+import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
 import com.eidiko.supermarket_action_service.exceptions.StockNotFoundException;
-import com.eidiko.supermarket_action_service.model.Stocks;
+import com.eidiko.supermarket_action_service.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +17,23 @@ public class StocksService {
     public StocksService(StocksRepo stocksRepo) {
         this.stocksRepo=stocksRepo;
     }
-    public Stocks addStocks(Stocks stock) {
+    public Stock addStocks(Stock stock) {
         return stocksRepo.addStocks(stock);
     }
 
-    public void updateStocks(int id,Stocks stocks)
+    public Stock updateStocks(int id, Stock stock)
     {
-         stocksRepo.updateStocks(id,stocks);
+         return stocksRepo.updateStocks(id, stock);
     }
 
-    public Stocks deleteStock(int id) throws StockNotFoundException {
+    public String deleteStock(int id) throws StockNotFoundException, EmployeeNotFoundException {
         return stocksRepo.deleteStock(id);
     }
+
+    public Stock updateStockQuantity(int stockId, int stockQuantity) throws InsufficientStockException {
+        return stocksRepo.updateStockQuantity(stockId,stockQuantity);
+    }
+
 
 
 }

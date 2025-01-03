@@ -11,7 +11,6 @@ spring:
       password: supermarket
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
-
     postgresql:
       url: jdbc:postgresql://10.0.0.42:5432/supermarket_db
       username: supermarket

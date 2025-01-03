@@ -1,12 +1,12 @@
 package com.eidiko.supermarket_action_service.response;
 import org.springframework.http.HttpStatus;
-public class ApiResponse<T> {
+public class ApiResponseEntity<T> {
 
     private String message;
     private HttpStatus code;
     private T data;
 
-    public ApiResponse(HttpStatus httpStatus, String employeeAddedSuccessfully,T t) {
+    public ApiResponseEntity(HttpStatus httpStatus, String employeeAddedSuccessfully, T t) {
     this.code=httpStatus;
     this.message=employeeAddedSuccessfully;
     this.data=t;
