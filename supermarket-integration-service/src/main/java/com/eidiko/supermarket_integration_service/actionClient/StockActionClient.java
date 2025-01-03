@@ -5,10 +5,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name ="action-stock",url = "http://10.0.0.19:8081/stocks/api")
+@FeignClient(name ="action-stock",url = "http://10.0.0.7:8081/stocks/api")
 public interface StockActionClient {
     @PostMapping("/addStocks")
-    public ResponseEntity<String> addStocks(@RequestBody Stock stock);
+    ResponseEntity<String> addStocks(@RequestBody Stock stock);
 
     @PatchMapping("/updateStocks/{id}")
      ResponseEntity<String> updateStocks(@PathVariable int id, @RequestBody Stock stock);
