@@ -1,20 +1,24 @@
 package com.eidiko.query.model;
 
+import java.time.LocalDate;
+
 public class Incentive {
 
     private int id;
     private double incentiveAmount;
     private Employee employeeId;
     private Sale saleId;
+    private LocalDate date = LocalDate.now();
 
     public Incentive() {
     }
 
-    public Incentive(int id, double incentiveAmount, Employee employeeId, Sale saleId) {
+    public Incentive(int id, double incentiveAmount, Employee employeeId, Sale saleId, LocalDate date) {
         this.id = id;
         this.incentiveAmount = incentiveAmount;
         this.employeeId = employeeId;
         this.saleId = saleId;
+        this.date = date;
     }
 
     public int getId() {
@@ -49,6 +53,14 @@ public class Incentive {
         this.saleId = saleId;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "Incentive{" +
@@ -56,6 +68,7 @@ public class Incentive {
                 ", incentiveAmount=" + incentiveAmount +
                 ", employeeId=" + employeeId +
                 ", saleId=" + saleId +
+                ", date=" + date +
                 '}';
     }
 
