@@ -1,18 +1,18 @@
 package com.eidiko.supermarket_action_service.dto;
 
-import com.eidiko.supermarket_action_service.model.Stocks;
+import com.eidiko.supermarket_action_service.model.Stock;
 
 import java.util.List;
 
 public class SaleRequest {
 
     private int employeeId;
-    private List<Stocks> stocks;
+    private List<Stock> stocks;
 
     public SaleRequest() {
     }
 
-    public SaleRequest(int employeeId, List<Stocks> stocks) {
+    public SaleRequest(int employeeId, List<Stock> stocks) {
         this.employeeId = employeeId;
         this.stocks = stocks;
     }
@@ -25,11 +25,11 @@ public class SaleRequest {
         this.employeeId = employeeId;
     }
 
-    public List<Stocks> getStocks() {
+    public List<Stock> getStocks() {
         return stocks;
     }
 
-    public void setStocks(List<Stocks> stocks) {
+    public void setStocks(List<Stock> stocks) {
         this.stocks = stocks;
     }
 

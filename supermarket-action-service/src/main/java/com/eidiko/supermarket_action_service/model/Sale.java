@@ -2,22 +2,22 @@ package com.eidiko.supermarket_action_service.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Sales {
+public class Sale {
 
     private int id;
-    private double salesAmount;
+    private double saleAmount;
     private Employee employeeId;
-    private List<Integer> stockId;
+    private List<Integer> stocks;
     private LocalDateTime saleDate=LocalDateTime.now();
 
-    public Sales() {
+    public Sale() {
     }
 
-    public Sales(int id, double salesAmount, Employee employeeId, List<Integer> stockId, LocalDateTime saleDate) {
+    public Sale(int id, double saleAmount, Employee employeeId, List<Integer> stocks, LocalDateTime saleDate) {
         this.id = id;
-        this.salesAmount = salesAmount;
+        this.saleAmount = saleAmount;
         this.employeeId = employeeId;
-        this.stockId = stockId;
+        this.stocks = stocks;
         this.saleDate = saleDate;
     }
 
@@ -29,12 +29,12 @@ public class Sales {
         this.id = id;
     }
 
-    public double getSalesAmount() {
-        return salesAmount;
+    public double getSaleAmount() {
+        return saleAmount;
     }
 
-    public void setSalesAmount(double salesAmount) {
-        this.salesAmount = salesAmount;
+    public void setSaleAmount(double saleAmount) {
+        this.saleAmount = saleAmount;
     }
 
     public Employee getEmployeeId() {
@@ -45,12 +45,12 @@ public class Sales {
         this.employeeId = employeeId;
     }
 
-    public List<Integer> getStockId() {
-        return stockId;
+    public List<Integer> getStocks() {
+        return stocks;
     }
 
-    public void setStockId(List<Integer> stockId) {
-        this.stockId = stockId;
+    public void setStocks(List<Integer> stocks) {
+        this.stocks = stocks;
     }
 
     public LocalDateTime getSaleDate() {
@@ -65,11 +65,10 @@ public class Sales {
     public String toString() {
         return "Sales{" +
                 "id=" + id +
-                ", salesAmount=" + salesAmount +
+                ", saleAmount=" + saleAmount +
                 ", employeeId=" + employeeId +
-                ", stockId=" + stockId +
+                ", stocks=" + stocks +
                 ", saleDate=" + saleDate +
                 '}';
     }
-
 }
