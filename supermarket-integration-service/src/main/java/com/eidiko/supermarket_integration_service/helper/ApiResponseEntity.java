@@ -3,17 +3,17 @@ package com.eidiko.supermarket_integration_service.helper;
 
 import org.springframework.http.HttpStatus;
 
-public class ApiResponse <T>{
+public class ApiResponseEntity<T>{
     private HttpStatus status;
     private String message;
     private T data;
 
-    public ApiResponse(HttpStatus status, String message, T data) {
+    public ApiResponseEntity(HttpStatus status, String message, T data) {
         this.status = status;
         this.message = message;
         this.data = data;
     }
-    public ApiResponse(){
+    public ApiResponseEntity(){
 
     }
     public HttpStatus getStatus() {
