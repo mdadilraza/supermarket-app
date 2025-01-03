@@ -1,6 +1,6 @@
 package com.eidiko.supermarket_action_service.controller;
 
-import com.eidiko.supermarket_action_service.dto.SalesDto;
+import com.eidiko.supermarket_action_service.dto.SaleRequest;
 import com.eidiko.supermarket_action_service.model.Sales;
 import com.eidiko.supermarket_action_service.response.ApiResponseEntity;
 import com.eidiko.supermarket_action_service.services.SalesService;
@@ -26,12 +26,12 @@ public class SalesController {
     }
 
     @PostMapping("/addSales")
-    public ResponseEntity<ApiResponseEntity<Sales>> addSales(@RequestBody SalesDto salesDto)
+    public ResponseEntity<ApiResponseEntity<Sales>> addSales(@RequestBody SaleRequest saleRequest)
     {
         ApiResponseEntity<Sales> apiResponseEntity =new ApiResponseEntity<>(
                 HttpStatus.CREATED,
                 "Sales added",
-                salesService.addSales(salesDto)
+                salesService.addSales(saleRequest)
         );
         return new ResponseEntity<>(apiResponseEntity,HttpStatus.OK);
     }

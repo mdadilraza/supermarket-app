@@ -8,7 +8,7 @@ public class Sales {
     private double salesAmount;
     private int employeeId;
     private List<Integer> stockId;
-    private LocalDateTime saleDate;
+    private LocalDateTime saleDate=LocalDateTime.now();
 
     public Sales()
     {
