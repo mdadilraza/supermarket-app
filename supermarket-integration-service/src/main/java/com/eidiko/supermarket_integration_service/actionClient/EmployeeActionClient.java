@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name ="action-employee",url = "http://10.0.0.19:8081/employees/api")
+@FeignClient(name ="action-employee",url = "http://10.0.0.7:8081/employees/api")
 public interface EmployeeActionClient {
     @PostMapping("/addEmployee")
      ResponseEntity<String> addEmployees(@RequestBody Employee employee);
