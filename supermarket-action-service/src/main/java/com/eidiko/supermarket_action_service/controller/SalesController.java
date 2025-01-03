@@ -1,9 +1,11 @@
 package com.eidiko.supermarket_action_service.controller;
 
-import com.eidiko.supermarket_action_service.dto.SalesDto;
+import com.eidiko.supermarket_action_service.dto.SaleRequest;
+import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.model.Sales;
-import com.eidiko.supermarket_action_service.response.ApiResponse;
+import com.eidiko.supermarket_action_service.response.ApiResponseEntity;
 import com.eidiko.supermarket_action_service.services.SalesService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("sales/api")
+@Tag(name = "Sales_Api")
 public class SalesController {
 
     private final SalesService salesService;
@@ -24,14 +27,13 @@ public class SalesController {
     }
 
     @PostMapping("/addSales")
-    public ResponseEntity<ApiResponse<Sales>> addSales(@RequestBody SalesDto salesDto)
-    {
-        ApiResponse<Sales>apiResponse=new ApiResponse<>(
+    public ResponseEntity<ApiResponseEntity<Sales>> addSales(@RequestBody SaleRequest saleRequest) throws EmployeeNotFoundException {
+        ApiResponseEntity<Sales> apiResponseEntity =new ApiResponseEntity<>(
                 HttpStatus.CREATED,
                 "Sales added",
-                salesService.addSales(salesDto)
+                salesService.addSales(saleRequest)
         );
-        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+        return new ResponseEntity<>(apiResponseEntity,HttpStatus.OK);
     }
 
 }

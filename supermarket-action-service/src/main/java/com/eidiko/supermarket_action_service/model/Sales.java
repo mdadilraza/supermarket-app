@@ -6,28 +6,19 @@ public class Sales {
 
     private int id;
     private double salesAmount;
-    private int employeeId;
+    private Employee employeeId;
     private List<Integer> stockId;
-    private LocalDateTime saleDate;
+    private LocalDateTime saleDate=LocalDateTime.now();
 
-    public Sales()
-    {
-        super();
+    public Sales() {
     }
 
-    public Sales(int id, double salesAmount, int employeeId, List<Integer> stockId) {
+    public Sales(int id, double salesAmount, Employee employeeId, List<Integer> stockId, LocalDateTime saleDate) {
         this.id = id;
         this.salesAmount = salesAmount;
         this.employeeId = employeeId;
         this.stockId = stockId;
-    }
-
-    public double getSalesAmount() {
-        return salesAmount;
-    }
-
-    public void setSalesAmount(double salesAmount) {
-        this.salesAmount = salesAmount;
+        this.saleDate = saleDate;
     }
 
     public int getId() {
@@ -38,11 +29,19 @@ public class Sales {
         this.id = id;
     }
 
-    public int getEmployeeId() {
+    public double getSalesAmount() {
+        return salesAmount;
+    }
+
+    public void setSalesAmount(double salesAmount) {
+        this.salesAmount = salesAmount;
+    }
+
+    public Employee getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(int employeeId) {
+    public void setEmployeeId(Employee employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -69,6 +68,8 @@ public class Sales {
                 ", salesAmount=" + salesAmount +
                 ", employeeId=" + employeeId +
                 ", stockId=" + stockId +
+                ", saleDate=" + saleDate +
                 '}';
     }
+
 }
