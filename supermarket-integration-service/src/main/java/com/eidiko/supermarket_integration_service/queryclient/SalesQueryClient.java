@@ -1,7 +1,9 @@
 package com.eidiko.supermarket_integration_service.queryclient;
 
-import com.eidiko.supermarket_integration_service.dto.SaleDto;
+import com.eidiko.supermarket_integration_service.dto.SaleDTO;
+import com.eidiko.supermarket_integration_service.helper.ApiResponseEntity;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -11,8 +13,11 @@ import java.util.List;
 public interface SalesQueryClient {
 
     @GetMapping("/{id}")
-    public SaleDto getEmployeeById(@PathVariable int id);
+    ResponseEntity<ApiResponseEntity<SaleDTO>> getSaleById(@PathVariable int id);
 
     @GetMapping
-    public List<SaleDto> getAllEmployees();
+    ResponseEntity<ApiResponseEntity<List<SaleDTO>>> getAllSales();
+
+    @GetMapping("/employee/{employeeId}")
+    ResponseEntity<ApiResponseEntity<List<SaleDTO>>> getSalesByEmployeeID(@PathVariable int employeeId);
 }
