@@ -1,20 +1,24 @@
 package com.eidiko.query.dto;
 
+import java.time.LocalDate;
+
 public class IncentiveDTO {
 
     private int id;
     private double incentiveAmount;
     private EmployeeDTO employeeId;
     private SaleDTO saleId;
+    private LocalDate date = LocalDate.now();
 
     public IncentiveDTO() {
     }
 
-    public IncentiveDTO(int id, double incentiveAmount, EmployeeDTO employeeId, SaleDTO saleId) {
+    public IncentiveDTO(int id, double incentiveAmount, EmployeeDTO employeeId, SaleDTO saleId, LocalDate date) {
         this.id = id;
         this.incentiveAmount = incentiveAmount;
         this.employeeId = employeeId;
         this.saleId = saleId;
+        this.date = date;
     }
 
     public int getId() {
@@ -49,6 +53,14 @@ public class IncentiveDTO {
         this.saleId = saleId;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "IncentiveDTO{" +
@@ -56,6 +68,7 @@ public class IncentiveDTO {
                 ", incentiveAmount=" + incentiveAmount +
                 ", employeeId=" + employeeId +
                 ", saleId=" + saleId +
+                ", date=" + date +
                 '}';
     }
 
