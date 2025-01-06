@@ -25,12 +25,12 @@ public class IncentiveDaoImpl implements IncentiveDAO {
         String query = "SELECT * " +
                 "FROM incentives i " +
                 "JOIN employees e ON i.employee_id = e.id " +
-                "JOIN sales s ON s.employee_id = e.id " +
+                "JOIN sales s ON s.id = i.sale_id " +
                 "WHERE e.id = ?";
         try {
             return postgresqlJdbcTemplate.query(query, new IncentiveMapper(), employeeId);
         } catch (EmptyResultDataAccessException e) {
-            throw new IncentiveNotFoundException("Incentive not found");
+            throw new IncentiveNotFoundException("Employee not found");
         }
     }
 
@@ -39,7 +39,7 @@ public class IncentiveDaoImpl implements IncentiveDAO {
         String query = "SELECT * " +
                 "FROM incentives i " +
                 "JOIN employees e ON i.employee_id = e.id " +
-                "JOIN sales s ON s.employee_id = e.id";
+                "JOIN sales s ON s.id = i.sale_id";
 
         return postgresqlJdbcTemplate.query(query, new IncentiveMapper());
     }
