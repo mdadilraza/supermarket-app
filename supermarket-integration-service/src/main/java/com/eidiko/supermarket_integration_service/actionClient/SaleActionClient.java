@@ -1,5 +1,4 @@
 package com.eidiko.supermarket_integration_service.actionClient;
-
 import com.eidiko.supermarket_integration_service.dto.SaleRequest;
 import com.eidiko.supermarket_integration_service.helper.ApiResponseEntity;
 import com.eidiko.supermarket_integration_service.model.Sale;
