@@ -1,5 +1,6 @@
 package com.eidiko.supermarket_action_service.controller;
 
+import com.eidiko.supermarket_action_service.dto.EmployeeDto;
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.model.Employee;
 import com.eidiko.supermarket_action_service.response.ApiResponseEntity;
@@ -37,12 +38,12 @@ public class EmployeeController {
     @PatchMapping("/updateEmployee/{id}")
     public ResponseEntity<ApiResponseEntity<Employee>> updateUser(@PathVariable int id,
                                                                   @RequestBody Employee employee) {
-       ApiResponseEntity<Employee> apiResponseEntity =new ApiResponseEntity<>(
-               HttpStatus.OK,
-               "employee details updated successfully",
-               employeeService.updateUserDetails(id, employee.getPhoneNumber(),employee.getEmail(),employee.getPassword())
-       );
-       return new ResponseEntity<>(apiResponseEntity,HttpStatus.CREATED);
+        ApiResponseEntity<Employee> apiResponseEntity =new ApiResponseEntity<>(
+                HttpStatus.OK,
+                "employee details updated successfully",
+                employeeService.updateUserDetails(id, employee.getPhoneNumber(),employee.getEmail(),employee.getPassword())
+        );
+        return new ResponseEntity<>(apiResponseEntity,HttpStatus.CREATED);
     }
 
     //delete employee based on id

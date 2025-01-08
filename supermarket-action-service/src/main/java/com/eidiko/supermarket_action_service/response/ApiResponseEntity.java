@@ -7,9 +7,9 @@ public class ApiResponseEntity<T> {
     private T data;
 
     public ApiResponseEntity(HttpStatus httpStatus, String employeeAddedSuccessfully, T t) {
-    this.code=httpStatus;
-    this.message=employeeAddedSuccessfully;
-    this.data=t;
+        this.code=httpStatus;
+        this.message=employeeAddedSuccessfully;
+        this.data=t;
     }
 
     public String getMessage() {
