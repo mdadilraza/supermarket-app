@@ -3,7 +3,7 @@ package com.eidiko.supermarket_action_service.controller;
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
 import com.eidiko.supermarket_action_service.exceptions.StockNotFoundException;
-import com.eidiko.supermarket_action_service.model.Stocks;
+import com.eidiko.supermarket_action_service.model.Stock;
 import com.eidiko.supermarket_action_service.response.ApiResponseEntity;
 import com.eidiko.supermarket_action_service.services.StocksService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,24 +24,24 @@ public class StocksController {
 
     //Add stocks
     @PostMapping("/addStocks")
-    public ResponseEntity<ApiResponseEntity<Stocks>> addStocks(@RequestBody Stocks stocks)
+    public ResponseEntity<ApiResponseEntity<Stock>> addStocks(@RequestBody Stock stock)
     {
-        ApiResponseEntity<Stocks> response = new ApiResponseEntity<>(
+        ApiResponseEntity<Stock> response = new ApiResponseEntity<>(
                 HttpStatus.CREATED,
                 "Stocks added successfully",
-                stocksService.addStocks(stocks)
+                stocksService.addStocks(stock)
         );
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     //Update stocks details
     @PatchMapping("/updateStocks/{id}")
-    public ResponseEntity<ApiResponseEntity<Stocks>> updateStocks(@PathVariable int id, @RequestBody Stocks stocks)
+    public ResponseEntity<ApiResponseEntity<Stock>> updateStocks(@PathVariable int id, @RequestBody Stock stock)
     {
-        ApiResponseEntity<Stocks> apiResponseEntity =new ApiResponseEntity<>(
+        ApiResponseEntity<Stock> apiResponseEntity =new ApiResponseEntity<>(
                 HttpStatus.OK,
                 "Stock details updated successfully",
-                stocksService.updateStocks(id,stocks)
+                stocksService.updateStocks(id, stock)
         );
         return new ResponseEntity<>(apiResponseEntity,HttpStatus.OK);
     }

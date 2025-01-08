@@ -1,7 +1,7 @@
 package com.eidiko.supermarket_action_service.model;
 
 
-public class Stocks {
+public class Stock {
 
     private int id;
     private String name;

@@ -2,7 +2,8 @@ package com.eidiko.supermarket_action_service.controller;
 
 import com.eidiko.supermarket_action_service.dto.SaleRequest;
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
-import com.eidiko.supermarket_action_service.model.Sales;
+import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
+import com.eidiko.supermarket_action_service.model.Sale;
 import com.eidiko.supermarket_action_service.response.ApiResponseEntity;
 import com.eidiko.supermarket_action_service.services.SalesService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,8 +28,8 @@ public class SalesController {
     }
 
     @PostMapping("/addSales")
-    public ResponseEntity<ApiResponseEntity<Sales>> addSales(@RequestBody SaleRequest saleRequest) throws EmployeeNotFoundException {
-        ApiResponseEntity<Sales> apiResponseEntity =new ApiResponseEntity<>(
+    public ResponseEntity<ApiResponseEntity<Sale>> addSales(@RequestBody SaleRequest saleRequest) throws InsufficientStockException, EmployeeNotFoundException {
+        ApiResponseEntity<Sale> apiResponseEntity =new ApiResponseEntity<>(
                 HttpStatus.CREATED,
                 "Sales added",
                 salesService.addSales(saleRequest)
