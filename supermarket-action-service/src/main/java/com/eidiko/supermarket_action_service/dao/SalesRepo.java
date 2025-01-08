@@ -1,8 +1,7 @@
 package com.eidiko.supermarket_action_service.dao;
 
 import com.eidiko.supermarket_action_service.dto.SaleRequest;
-import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
-import com.eidiko.supermarket_action_service.model.Employee;
+import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
 import com.eidiko.supermarket_action_service.model.Sale;
 import com.eidiko.supermarket_action_service.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +20,20 @@ public class SalesRepo {
 
     private final JdbcTemplate jdbcTemplate;
     private final JdbcTemplate postJdbcTemplate;
+    private final StocksRepo stocksRepo;
 
-    @Autowired
-    public SalesRepo(@Qualifier("mssqlJdbcTemplate") JdbcTemplate jdbcTemplate,@Qualifier("postgresqlJdbcTemplate")JdbcTemplate postgresJdbc)
+
+    public SalesRepo(@Qualifier("mssqlJdbcTemplate") JdbcTemplate jdbcTemplate,StocksRepo stocksRepo,@Qualifier("postgresqlJdbcTemplate")JdbcTemplate postgresJdbc)
     {
         this.jdbcTemplate=jdbcTemplate;
         this.postJdbcTemplate=postgresJdbc;
+        this.stocksRepo=stocksRepo;
     }
 
-    public Sale addSales(SaleRequest saleRequest) throws EmployeeNotFoundException {
+    public Sale addSales(SaleRequest saleRequest) throws InsufficientStockException {
         List<Stock>list = saleRequest.getStocks();
         List<Integer>resultList=new ArrayList<>();
         double totalAmount=0;
-        String empQuery = "SELECT * FROM employees WHERE id = ?";
-        Employee employee = postJdbcTemplate.queryForObject(empQuery, new BeanPropertyRowMapper<>(Employee.class), saleRequest.getEmployeeId());
-        if (employee == null) {
-            throw new EmployeeNotFoundException("employees not found");
-        }
         for(Stock stock :list)
         {
             String stockQuery="select * from stocks where id= ?";
@@ -46,16 +42,19 @@ public class SalesRepo {
             resultList.add(stock1.getId());
             double total= stock1.getPrice()* stock.getQuantity();
             totalAmount=totalAmount+total;
+            stocksRepo.updateStockQuantity(stock1.getId(),stock.getQuantity());
+
+
         }
-        Sale sales=new Sale();
-        sales.setStocks(resultList);
-        sales.setSaleAmount(totalAmount);
-        sales.setEmployeeId(employee);
-        Integer[] stockArray = sales.getStocks().toArray(new Integer[0]);
-        Timestamp timestamp = Timestamp.valueOf(sales.getSaleDate());
+        Sale sale =new Sale();
+        sale.setStockId(resultList);
+        sale.setSalesAmount(totalAmount);
+        sale.setEmployeeId(saleRequest.getEmployeeId());
+        Integer[] stockArray = sale.getStockId().toArray(new Integer[0]);
+        Timestamp timestamp = Timestamp.valueOf(sale.getSaleDate());
         String query="INSERT INTO sales (sales_amount, stock, date, employee_id) VALUES (?,?,?,?)";
-        int update = postJdbcTemplate.update(query, sales.getSaleAmount(), stockArray, timestamp, employee.getId());
-        return sales;
+        int update = postJdbcTemplate.update(query, sale.getSalesAmount(), stockArray, timestamp, sale.getEmployeeId());
+        return sale;
     }
 
 
