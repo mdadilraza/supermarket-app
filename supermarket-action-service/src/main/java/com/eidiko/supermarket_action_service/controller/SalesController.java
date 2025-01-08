@@ -1,5 +1,4 @@
 package com.eidiko.supermarket_action_service.controller;
-
 import com.eidiko.supermarket_action_service.dto.SaleRequest;
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
