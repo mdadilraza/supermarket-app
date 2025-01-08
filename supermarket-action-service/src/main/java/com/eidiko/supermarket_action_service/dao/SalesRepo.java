@@ -1,6 +1,7 @@
 package com.eidiko.supermarket_action_service.dao;
 
 import com.eidiko.supermarket_action_service.dto.SaleRequest;
+import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
 import com.eidiko.supermarket_action_service.model.Sale;
 import com.eidiko.supermarket_action_service.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +20,17 @@ public class SalesRepo {
 
     private final JdbcTemplate jdbcTemplate;
     private final JdbcTemplate postJdbcTemplate;
+    private final StocksRepo stocksRepo;
 
-    @Autowired
-    public SalesRepo(@Qualifier("mssqlJdbcTemplate") JdbcTemplate jdbcTemplate,@Qualifier("postgresqlJdbcTemplate")JdbcTemplate postgresJdbc)
+
+    public SalesRepo(@Qualifier("mssqlJdbcTemplate") JdbcTemplate jdbcTemplate,StocksRepo stocksRepo,@Qualifier("postgresqlJdbcTemplate")JdbcTemplate postgresJdbc)
     {
         this.jdbcTemplate=jdbcTemplate;
         this.postJdbcTemplate=postgresJdbc;
+        this.stocksRepo=stocksRepo;
     }
 
-    public Sale addSales(SaleRequest saleRequest)
-    {
+    public Sale addSales(SaleRequest saleRequest) throws InsufficientStockException {
         List<Stock>list = saleRequest.getStocks();
         List<Integer>resultList=new ArrayList<>();
         double totalAmount=0;
@@ -40,6 +42,9 @@ public class SalesRepo {
             resultList.add(stock1.getId());
             double total= stock1.getPrice()* stock.getQuantity();
             totalAmount=totalAmount+total;
+            stocksRepo.updateStockQuantity(stock1.getId(),stock.getQuantity());
+
+
         }
         Sale sale =new Sale();
         sale.setStockId(resultList);
