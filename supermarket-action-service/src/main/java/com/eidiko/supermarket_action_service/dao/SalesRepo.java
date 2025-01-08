@@ -1,10 +1,14 @@
 package com.eidiko.supermarket_action_service.dao;
 
 import com.eidiko.supermarket_action_service.dto.SaleRequest;
-import com.eidiko.supermarket_action_service.model.Sales;
-import com.eidiko.supermarket_action_service.model.Stocks;
+import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
+import com.eidiko.supermarket_action_service.exceptions.InsufficientStockException;
+import com.eidiko.supermarket_action_service.model.Employee;
+import com.eidiko.supermarket_action_service.model.Sale;
+import com.eidiko.supermarket_action_service.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -27,29 +31,29 @@ public class SalesRepo {
         this.postJdbcTemplate=postgresJdbc;
     }
 
-    public Sales addSales(SaleRequest saleRequest)
+    public Sale addSales(SaleRequest saleRequest)
     {
-        List<Stocks>list = saleRequest.getStocks();
+        List<Stock>list = saleRequest.getStocks();
         List<Integer>resultList=new ArrayList<>();
         double totalAmount=0;
-        for(Stocks stocks:list)
+        for(Stock stock :list)
         {
             String stockQuery="select * from stocks where id= ?";
-            Stocks stocks1=jdbcTemplate.queryForObject(stockQuery,new BeanPropertyRowMapper<>(Stocks.class),stocks.getId());
-            assert stocks1 != null;
-            resultList.add(stocks1.getId());
-            double total=stocks1.getPrice()*stocks.getQuantity();
+            Stock stock1 =jdbcTemplate.queryForObject(stockQuery,new BeanPropertyRowMapper<>(Stock.class), stock.getId());
+            assert stock1 != null;
+            resultList.add(stock1.getId());
+            double total= stock1.getPrice()* stock.getQuantity();
             totalAmount=totalAmount+total;
         }
-        Sales sales=new Sales();
-        sales.setStockId(resultList);
-        sales.setSalesAmount(totalAmount);
-        sales.setEmployeeId(saleRequest.getEmployeeId());
-        Integer[] stockArray = sales.getStockId().toArray(new Integer[0]);
-        Timestamp timestamp = Timestamp.valueOf(sales.getSaleDate());
+        Sale sale =new Sale();
+        sale.setStockId(resultList);
+        sale.setSalesAmount(totalAmount);
+        sale.setEmployeeId(saleRequest.getEmployeeId());
+        Integer[] stockArray = sale.getStockId().toArray(new Integer[0]);
+        Timestamp timestamp = Timestamp.valueOf(sale.getSaleDate());
         String query="INSERT INTO sales (sales_amount, stock, date, employee_id) VALUES (?,?,?,?)";
-        int update = postJdbcTemplate.update(query, sales.getSalesAmount(), stockArray, timestamp, sales.getEmployeeId());
-        return sales;
+        int update = postJdbcTemplate.update(query, sale.getSalesAmount(), stockArray, timestamp, sale.getEmployeeId());
+        return sale;
     }
 
 

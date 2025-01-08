@@ -1,4 +1,4 @@
-package com.eidiko.supermarket_query_service;
+package com.eidiko.query;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

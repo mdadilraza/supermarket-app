@@ -1,7 +1,6 @@
-package com.eidiko.supermarket_action_service.model;
+package com.eidiko.query.model;
 
-
-public class Stocks {
+public class Stock {
 
     private int id;
     private String name;
@@ -9,6 +8,16 @@ public class Stocks {
     private int quantity;
     private double price;
 
+    public Stock() {
+    }
+
+    public Stock(int id, String name, String category, int quantity, double price) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.quantity = quantity;
+        this.price = price;
+    }
 
     public int getId() {
         return id;
@@ -52,7 +61,7 @@ public class Stocks {
 
     @Override
     public String toString() {
-        return "Stocks{" +
+        return "Stock{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
@@ -60,4 +69,5 @@ public class Stocks {
                 ", price=" + price +
                 '}';
     }
+
 }

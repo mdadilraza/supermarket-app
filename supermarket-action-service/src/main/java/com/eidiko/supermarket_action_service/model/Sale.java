@@ -2,7 +2,7 @@ package com.eidiko.supermarket_action_service.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Sales {
+public class Sale {
 
     private int id;
     private double salesAmount;
@@ -10,12 +10,12 @@ public class Sales {
     private List<Integer> stockId;
     private LocalDateTime saleDate=LocalDateTime.now();
 
-    public Sales()
+    public Sale()
     {
         super();
     }
 
-    public Sales(int id, double salesAmount, int employeeId, List<Integer> stockId) {
+    public Sale(int id, double salesAmount, int employeeId, List<Integer> stockId) {
         this.id = id;
         this.salesAmount = salesAmount;
         this.employeeId = employeeId;

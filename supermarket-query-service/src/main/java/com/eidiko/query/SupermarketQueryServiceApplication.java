@@ -1,4 +1,4 @@
-package com.eidiko.supermarket_query_service;
+package com.eidiko.query;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
