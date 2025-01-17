@@ -27,9 +27,9 @@ public class StocksRepo {
     public Stock addStocks(Stock stock)
     {
         String sql = "INSERT INTO stocks (name,category,quantity,price) VALUES (?, ?, ?,?)";
-        int update = jdbcTemplate.update(sql, stock.getName(), stock.getCategory(), stock.getQuantity(), stock.getPrice());
-       String query="select * from stocks where name=?";
-       return jdbcTemplate.queryForObject(query,new BeanPropertyRowMapper<>(Stock.class),stock.getName());
+        jdbcTemplate.update(sql, stock.getName(), stock.getCategory(), stock.getQuantity(), stock.getPrice());
+        String query="select * from stocks where name=?";
+        return jdbcTemplate.queryForObject(query,new BeanPropertyRowMapper<>(Stock.class),stock.getName());
     }
 
     public Stock updateStocks(int id, Stock stock)
@@ -74,7 +74,7 @@ public class StocksRepo {
          return stock1;
     }
 
-    public String deleteStock(int id) throws StockNotFoundException, EmployeeNotFoundException {
+    public String deleteStock(int id) throws  EmployeeNotFoundException {
         String sql="delete from stocks where id=?";
         int result=jdbcTemplate.update(sql,id);
         if (result != 0) {
@@ -84,7 +84,7 @@ public class StocksRepo {
     }
 
 
-    public Stock updateStockQuantity(int stockId, int sellQuantity) throws InsufficientStockException {
+    public Stock updateStockQuantity(int stockId, int sellQuantity) throws InsufficientStockException, StockNotFoundException {
         String getStock="select * from stocks where id=?";
         Stock stock =jdbcTemplate.queryForObject(getStock,new BeanPropertyRowMapper<>(Stock.class),stockId);
         assert stock != null;
@@ -98,7 +98,7 @@ public class StocksRepo {
                 stock.setQuantity(updatedQuantity);
                 return stock;
             } else {
-                throw new RuntimeException("No rows affected, stock update failed");
+                throw new StockNotFoundException("No rows affected, stock update failed");
             }
         } else {
             throw new InsufficientStockException("Insufficient stock to complete the sale");

@@ -20,11 +20,11 @@ public class EmployeeService {
     }
 
     public Employee updateUserDetails(int userId, String newPhoneNumber, String newEmail, String newPassword) {
-    return employeeRepo.updateUserDetails(userId,newPhoneNumber,newEmail,newPassword);
+        return employeeRepo.updateUserDetails(userId,newPhoneNumber,newEmail,newPassword);
     }
 
     public String deleteEmployee(int id) throws EmployeeNotFoundException {
         return employeeRepo.deleteEmployee(id);
     }
-    
+
 }

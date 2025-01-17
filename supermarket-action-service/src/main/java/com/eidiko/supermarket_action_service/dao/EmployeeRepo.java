@@ -2,6 +2,7 @@ package com.eidiko.supermarket_action_service.dao;
 
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.model.Employee;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class EmployeeRepo {
 
     private final JdbcTemplate jdbcTemplate;
@@ -69,7 +71,7 @@ public class EmployeeRepo {
         String resQuery="select * from employees where id=?";
         Employee employee=jdbcTemplate.queryForObject(resQuery,new BeanPropertyRowMapper<>(Employee.class),id);
         jdbcTemplate.update(sql.toString(), params.toArray());
-        System.out.println(employee);
+        log.info(String.valueOf(employee));
         return employee;
     }
 }

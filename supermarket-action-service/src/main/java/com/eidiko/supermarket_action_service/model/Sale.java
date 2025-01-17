@@ -1,24 +1,34 @@
 package com.eidiko.supermarket_action_service.model;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Sale {
 
     private int id;
-    private double saleAmount;
-    private Employee employeeId;
-    private List<Integer> stocks;
+    private double salesAmount;
+    private int employeeId;
+    private List<Integer> stockId;
     private LocalDateTime saleDate=LocalDateTime.now();
 
-    public Sale() {
+    public Sale()
+    {
+        super();
     }
 
-    public Sale(int id, double saleAmount, Employee employeeId, List<Integer> stocks, LocalDateTime saleDate) {
+    public Sale(int id, double salesAmount, int employeeId, List<Integer> stockId) {
         this.id = id;
-        this.saleAmount = saleAmount;
+        this.salesAmount = salesAmount;
         this.employeeId = employeeId;
-        this.stocks = stocks;
-        this.saleDate = saleDate;
+        this.stockId = stockId;
+    }
+
+    public double getSalesAmount() {
+        return salesAmount;
+    }
+
+    public void setSalesAmount(double salesAmount) {
+        this.salesAmount = salesAmount;
     }
 
     public int getId() {
@@ -29,28 +39,20 @@ public class Sale {
         this.id = id;
     }
 
-    public double getSaleAmount() {
-        return saleAmount;
-    }
-
-    public void setSaleAmount(double saleAmount) {
-        this.saleAmount = saleAmount;
-    }
-
-    public Employee getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Employee employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
-    public List<Integer> getStocks() {
-        return stocks;
+    public List<Integer> getStockId() {
+        return stockId;
     }
 
-    public void setStocks(List<Integer> stocks) {
-        this.stocks = stocks;
+    public void setStockId(List<Integer> stockId) {
+        this.stockId = stockId;
     }
 
     public LocalDateTime getSaleDate() {
@@ -65,10 +67,9 @@ public class Sale {
     public String toString() {
         return "Sales{" +
                 "id=" + id +
-                ", saleAmount=" + saleAmount +
+                ", salesAmount=" + salesAmount +
                 ", employeeId=" + employeeId +
-                ", stocks=" + stocks +
-                ", saleDate=" + saleDate +
+                ", stockId=" + stockId +
                 '}';
     }
 }

@@ -8,6 +8,7 @@ class SupermarketActionServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
+		throw new UnsupportedOperationException("This method is not supported in this class.");
 	}
 
 }
