@@ -7,13 +7,13 @@ spring:
 
   datasource:
     postgresql:
-      url: jdbc:postgresql://10.0.0.42:5432/supermarket_db
+      url: jdbc:postgresql://10.0.0.43:5432/supermarket_db
       username: supermarket
       password: supermarket
       driverClassName: org.postgresql.Driver
 
     mssql:
-      url: jdbc:sqlserver://10.0.0.42:49170;databaseName=supermarket_db;encrypt=true;trustServerCertificate=true
+      url: jdbc:sqlserver://10.0.0.43:49170;databaseName=supermarket_db;encrypt=true;trustServerCertificate=true
       username: supermarket
       password: supermarket
       driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
