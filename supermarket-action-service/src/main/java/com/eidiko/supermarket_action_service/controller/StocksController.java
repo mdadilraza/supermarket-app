@@ -48,7 +48,7 @@ public class StocksController {
 
     //Delete stocks based on id
     @DeleteMapping("/deleteStock/{id}")
-    public ResponseEntity<ApiResponseEntity<String>> deleteStock(@PathVariable int id) throws StockNotFoundException, EmployeeNotFoundException {
+    public ResponseEntity<ApiResponseEntity<String>> deleteStock(@PathVariable int id) throws  EmployeeNotFoundException {
         ApiResponseEntity<String> response = new ApiResponseEntity<>(
                 HttpStatus.NO_CONTENT,
                 "Stocks DELETED successfully",
