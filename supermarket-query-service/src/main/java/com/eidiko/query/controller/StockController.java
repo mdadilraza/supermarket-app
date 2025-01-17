@@ -25,8 +25,11 @@ import java.util.List;
 @Tag(name = "Stock")
 public class StockController {
 
-    @Autowired
-    private StockService stockService;
+    private final StockService stockService;
+
+    public StockController(StockService stockService) {
+        this.stockService = stockService;
+    }
 
     @GetMapping("/{id}")
     @Operation(

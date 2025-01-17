@@ -24,8 +24,11 @@ import java.util.List;
 @Tag(name = "Incentive")
 public class IncentiveController {
 
-    @Autowired
-    private IncentiveService incentiveService;
+    private final IncentiveService incentiveService;
+
+    public IncentiveController(IncentiveService incentiveService) {
+        this.incentiveService = incentiveService;
+    }
 
     @GetMapping("/{id}")
     @Operation(
