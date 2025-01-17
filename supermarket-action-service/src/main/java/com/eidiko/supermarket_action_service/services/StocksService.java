@@ -26,11 +26,11 @@ public class StocksService {
          return stocksRepo.updateStocks(id, stock);
     }
 
-    public String deleteStock(int id) throws StockNotFoundException, EmployeeNotFoundException {
+    public String deleteStock(int id) throws EmployeeNotFoundException {
         return stocksRepo.deleteStock(id);
     }
 
-    public Stock updateStockQuantity(int stockId, int stockQuantity) throws InsufficientStockException {
+    public Stock updateStockQuantity(int stockId, int stockQuantity) throws InsufficientStockException, StockNotFoundException {
         return stocksRepo.updateStockQuantity(stockId,stockQuantity);
     }
 

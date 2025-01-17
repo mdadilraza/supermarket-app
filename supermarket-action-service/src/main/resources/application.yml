@@ -6,13 +6,43 @@ spring:
     name: supermarket-action-service
   datasource:
     mssql:
-      url: jdbc:sqlserver://10.0.0.132:49170;databaseName=supermarket_db;encrypt=true;trustServerCertificate=true;
+      url: jdbc:sqlserver://10.0.0.43:49170;databaseName=supermarket_db;encrypt=true;trustServerCertificate=true;
       username: supermarket
       password: supermarket
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
     postgresql:
-      url: jdbc:postgresql://10.0.0.132:5432/supermarket_db
+      url: jdbc:postgresql://10.0.0.43:5432/supermarket_db
       username: supermarket
       password: supermarket
       driver-class-name: org.postgresql.Driver
+
+executors:
+  default:
+    docker:
+      - image: maven:3.8.4-openjdk-11
+        auth:
+          username: my-docker-username
+          password: my-docker-password
+
+jobs:
+  sonar_scan:
+    docker:
+      - image: maven:3.8.4-openjdk-11
+    steps:
+      - checkout
+      - run:
+          name: Set up SonarQube analysis
+          command: |
+            mvn clean verify sonar:sonar \
+            -Dsonar.projectKey=supermarket \
+            -Dsonar.projectName=supermarket \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.token=${sqp_ad8308213f0cea08e77b14fa022c53c7ca52062b}
+            -Dsonar.maven.plugin.version=3.9.0.215
+
+workflows:
+  version: 2
+  sonar_workflow:
+    jobs:
+      - sonar_scan
