@@ -1,6 +1,5 @@
 package com.eidiko.supermarket_action_service.controller;
 
-import com.eidiko.supermarket_action_service.dto.EmployeeDto;
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.model.Employee;
 import com.eidiko.supermarket_action_service.response.ApiResponseEntity;

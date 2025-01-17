@@ -1,7 +1,9 @@
 package com.eidiko.supermarket_integration_service.controller;
 
-import com.eidiko.supermarket_integration_service.model.Incentive;
+import com.eidiko.supermarket_integration_service.dto.IncentiveDTO;
+import com.eidiko.supermarket_integration_service.helper.ApiResponseEntity;
 import com.eidiko.supermarket_integration_service.service.IncentiveService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +20,9 @@ public class IncentiveController {
         this.incentiveService = incentiveService;
     }
     @GetMapping
-    public List<Incentive> getAllIncentieve(){
-        return incentiveService.getAllIncentieve();
+    public ResponseEntity<ApiResponseEntity<List<IncentiveDTO>>> getAllIncentieve(){
+        return  incentiveService.getAllIncentieve();
     }
+
 
 }

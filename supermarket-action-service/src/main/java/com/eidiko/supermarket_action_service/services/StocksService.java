@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StocksService {
 
-    private final StocksRepo stocksRepo;
+  private final StocksRepo stocksRepo;
 
     @Autowired
     public StocksService(StocksRepo stocksRepo) {
@@ -23,14 +23,14 @@ public class StocksService {
 
     public Stock updateStocks(int id, Stock stock)
     {
-        return stocksRepo.updateStocks(id, stock);
+         return stocksRepo.updateStocks(id, stock);
     }
 
-    public String deleteStock(int id) throws StockNotFoundException, EmployeeNotFoundException {
+    public String deleteStock(int id) throws EmployeeNotFoundException {
         return stocksRepo.deleteStock(id);
     }
 
-    public Stock updateStockQuantity(int stockId, int stockQuantity) throws InsufficientStockException {
+    public Stock updateStockQuantity(int stockId, int stockQuantity) throws InsufficientStockException, StockNotFoundException {
         return stocksRepo.updateStockQuantity(stockId,stockQuantity);
     }
 

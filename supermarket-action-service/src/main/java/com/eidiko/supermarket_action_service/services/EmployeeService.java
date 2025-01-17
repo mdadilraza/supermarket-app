@@ -1,7 +1,6 @@
 package com.eidiko.supermarket_action_service.services;
 
 import com.eidiko.supermarket_action_service.dao.EmployeeRepo;
-import com.eidiko.supermarket_action_service.dto.EmployeeDto;
 import com.eidiko.supermarket_action_service.exceptions.EmployeeNotFoundException;
 import com.eidiko.supermarket_action_service.model.Employee;
 import org.springframework.stereotype.Service;
